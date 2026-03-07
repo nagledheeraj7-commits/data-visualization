@@ -6,8 +6,90 @@
     <title>Data Visualization Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal show">
+        <div class="modal-content login-modal">
+            <div class="modal-header">
+                <h3>🔐 Login to Dashboard</h3>
+            </div>
+            <div class="modal-body">
+                <div class="login-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                    <button class="tab-btn" data-tab="reset">Reset Password</button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="tab-content active">
+                    <div class="form-group">
+                        <label for="login-employee-id">Employee ID *</label>
+                        <input type="text" id="login-employee-id" name="employeeId" required placeholder="Enter your employee ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password *</label>
+                        <input type="password" id="login-password" name="password" required placeholder="Enter your password">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                    <div class="login-info">
+                        <p><small>Administrator Login: ID = 12345678, Password = 1234567878</small></p>
+                    </div>
+                </form>
+                
+                <!-- Register Form -->
+                <form id="register-form" class="tab-content">
+                    <div class="form-group">
+                        <label for="register-employee-id">Employee ID *</label>
+                        <input type="text" id="register-employee-id" name="employeeId" required placeholder="Enter employee ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-name">Full Name *</label>
+                        <input type="text" id="register-name" name="name" required placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email ID *</label>
+                        <input type="email" id="register-email" name="email" required placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password *</label>
+                        <input type="password" id="register-password" name="password" required placeholder="Create password">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-role">Role *</label>
+                        <select id="register-role" name="role" required>
+                            <option value="">Select role</option>
+                            <option value="employee">Employee</option>
+                            <option value="administrator">Administrator</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="showLoginTab()">Back to Login</button>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+                
+                <!-- Reset Password Form -->
+                <form id="reset-form" class="tab-content">
+                    <div class="form-group">
+                        <label for="reset-email">Email ID *</label>
+                        <input type="email" id="reset-email" name="email" required placeholder="Enter your email address">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="showLoginTab()">Back to Login</button>
+                        <button type="submit" class="btn btn-primary">Send Reset Code</button>
+                    </div>
+                    <div class="reset-info">
+                        <p><small>A verification code will be sent to your email</small></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Header Section -->
     <header class="header">
         <div class="container">
@@ -15,6 +97,13 @@
                 <div class="header-text">
                     <h1 class="header-title">Data Visualization Dashboard</h1>
                     <p class="header-subtitle">Sales Data Analysis & Insights</p>
+                </div>
+                <div class="user-info">
+                    <div class="user-details">
+                        <span class="user-name" id="current-user-name">Guest User</span>
+                        <span class="user-id" id="current-user-id">Not logged in</span>
+                    </div>
+                    <button id="logout-btn" class="btn btn-secondary" style="display: none;">Logout</button>
                 </div>
                 <div class="header-controls">
                     <button id="dark-mode-toggle" class="btn btn-secondary" title="Toggle Dark Mode">
@@ -113,6 +202,15 @@
                             <input type="number" id="price-max" class="price-input" placeholder="Max Price" min="0">
                         </div>
                         <button id="refresh-btn" class="btn btn-primary">Refresh Data</button>
+                        <div class="import-controls">
+                            <input type="file" id="file-input" accept=".csv,.xlsx,.xls">
+                            <button id="import-btn" class="btn btn-secondary">📁 Import Excel/CSV</button>
+                            <button id="manual-entry-btn" class="btn btn-secondary">➕ Add Data</button>
+                            <button id="export-btn" class="btn btn-secondary">📥 Export CSV</button>
+                        </div>
+                    </div>
+                    <div id="search-stats" class="search-stats">
+                        <!-- Search statistics will appear here -->
                     </div>
                     <div class="table-wrapper">
                         <table id="data-table" class="data-table">
@@ -141,6 +239,35 @@
                 <!-- Validation messages will appear here -->
             </div>
             
+            <!-- Audit Trail Section -->
+            <section id="audit-trail" class="section">
+                <div class="container">
+                    <h2 class="section-title">📋 Audit Trail</h2>
+                    <div class="audit-container">
+                        <div class="audit-controls">
+                            <button id="clear-audit-btn" class="btn btn-secondary">🗑️ Clear History</button>
+                            <button id="export-audit-btn" class="btn btn-secondary">📥 Export Audit</button>
+                        </div>
+                        <div class="audit-table-wrapper">
+                            <table id="audit-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>User</th>
+                                        <th>Action</th>
+                                        <th>Details</th>
+                                        <th>IP Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="audit-table-body">
+                                    <!-- Audit records will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
             <!-- Real-time Status -->
             <div id="real-time-status" class="real-time-status">
                 <span class="status-indicator"></span>
@@ -156,6 +283,75 @@
             <p>&copy; 2024 Data Visualization Dashboard. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Manual Data Entry Modal -->
+    <div id="manual-entry-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>➕ Add New Sales Record</h3>
+                <span class="close-btn" id="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="manual-entry-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="manual-product">Product Name *</label>
+                            <input type="text" id="manual-product" name="product" required placeholder="Enter product name">
+                        </div>
+                        <div class="form-group">
+                            <label for="manual-category">Category *</label>
+                            <select id="manual-category" name="category" required>
+                                <option value="">Select category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Stationery">Stationery</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Food">Food</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="manual-sales">Sales Amount (₹) *</label>
+                            <input type="number" id="manual-sales" name="sales" required min="0" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="manual-quantity">Quantity *</label>
+                            <input type="number" id="manual-quantity" name="quantity" required min="1" placeholder="1">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="manual-date">Date *</label>
+                            <input type="date" id="manual-date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="manual-region">Region</label>
+                            <select id="manual-region" name="region">
+                                <option value="">Select region</option>
+                                <option value="North">North</option>
+                                <option value="South">South</option>
+                                <option value="East">East</option>
+                                <option value="West">West</option>
+                                <option value="Central">Central</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="manual-salesperson">Salesperson</label>
+                            <input type="text" id="manual-salesperson" name="salesperson" placeholder="Enter salesperson name">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Record</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript -->
     <script src="script.js"></script>
