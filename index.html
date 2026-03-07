@@ -10,85 +10,9 @@
 </head>
 <body>
     <!-- Login Modal -->
-    <div id="login-modal" class="modal show">
-        <div class="modal-content login-modal">
-            <div class="modal-header">
-                <h3>🔐 Login to Dashboard</h3>
-            </div>
-            <div class="modal-body">
-                <div class="login-tabs">
-                    <button class="tab-btn active" data-tab="login">Login</button>
-                    <button class="tab-btn" data-tab="register">Register</button>
-                    <button class="tab-btn" data-tab="reset">Reset Password</button>
-                </div>
+    
                 
-                <!-- Login Form -->
-                <form id="login-form" class="tab-content active">
-                    <div class="form-group">
-                        <label for="login-employee-id">Employee ID *</label>
-                        <input type="text" id="login-employee-id" name="employeeId" required placeholder="Enter your employee ID">
-                    </div>
-                    <div class="form-group">
-                        <label for="login-password">Password *</label>
-                        <input type="password" id="login-password" name="password" required placeholder="Enter your password">
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                    <div class="login-info">
-                        <p><small>Administrator Login: ID = 12345678, Password = 1234567878</small></p>
-                    </div>
-                </form>
                 
-                <!-- Register Form -->
-                <form id="register-form" class="tab-content">
-                    <div class="form-group">
-                        <label for="register-employee-id">Employee ID *</label>
-                        <input type="text" id="register-employee-id" name="employeeId" required placeholder="Enter employee ID">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-name">Full Name *</label>
-                        <input type="text" id="register-name" name="name" required placeholder="Enter full name">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-email">Email ID *</label>
-                        <input type="email" id="register-email" name="email" required placeholder="Enter email address">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-password">Password *</label>
-                        <input type="password" id="register-password" name="password" required placeholder="Create password">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-role">Role *</label>
-                        <select id="register-role" name="role" required>
-                            <option value="">Select role</option>
-                            <option value="employee">Employee</option>
-                            <option value="administrator">Administrator</option>
-                        </select>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="showLoginTab()">Back to Login</button>
-                        <button type="submit" class="btn btn-primary">Register</button>
-                    </div>
-                </form>
-                
-                <!-- Reset Password Form -->
-                <form id="reset-form" class="tab-content">
-                    <div class="form-group">
-                        <label for="reset-email">Email ID *</label>
-                        <input type="email" id="reset-email" name="email" required placeholder="Enter your email address">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="showLoginTab()">Back to Login</button>
-                        <button type="submit" class="btn btn-primary">Send Reset Code</button>
-                    </div>
-                    <div class="reset-info">
-                        <p><small>A verification code will be sent to your email</small></p>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <!-- Header Section -->
     <header class="header">
