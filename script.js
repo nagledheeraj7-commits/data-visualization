@@ -1,8 +1,16 @@
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function() {
+
     if (localStorage.getItem("loggedIn") === "true") {
-        document.getElementById("login-modal").style.display = "none";
+
+        const loginModal = document.getElementById("login-modal");
+
+        if (loginModal) {
+            loginModal.style.display = "none";
+        }
+
     }
-};
+
+});
 // Global variables to store data and chart instances
 let salesData = [];
 let barChart = null;
@@ -442,28 +450,24 @@ function handlePasswordResetConfirm(e, email) {
 
 // Enhanced login handler
 loginForm.addEventListener('submit', handleLogin);
+
 function handleLogin(e) {
     e.preventDefault();
 
     const employeeId = document.getElementById('login-employee-id').value.trim();
     const password = document.getElementById('login-password').value;
 
-    if (employeeId === "12345678" && password === "12345678") {
+    if (employeeId === "12345678" && password === "1234567878") {
 
-        // Save login
         localStorage.setItem("loggedIn", "true");
 
-        // Hide login modal
-        document.getElementById("login-modal").style.display = "none";
-
-        // Show dashboard
-        document.getElementById("dashboard").style.display = "block";
+        // reload page after login
+        window.location.reload();
 
     } else {
         alert("Invalid Employee ID or Password");
     }
 }
-
     
     // Simple validation
     if (!employeeId || !password) {
