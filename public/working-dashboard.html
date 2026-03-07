@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization Dashboard - Working Version</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-right: 1.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .stat-title {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-3px);
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Simple CSS Charts */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 250px;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            min-height: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .bar:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #667eea;
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .bar-label {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            color: #333;
+        }
+
+        .line-chart {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            padding: 1rem;
+        }
+
+        .line-chart svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .pie-chart {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            position: relative;
+            background: conic-gradient(
+                #667eea 0deg 120deg,
+                #764ba2 120deg 240deg,
+                #ff9f40 240deg 360deg
+            );
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+
+        .pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .table-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #5a6fd8;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .message {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #5a6fd8;
+            transform: scale(1.1);
+        }
+
+        .real-time-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #28a745;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.paused {
+            background-color: #dc3545;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .header {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+        }
+
+        body.dark-mode .stat-card,
+        body.dark-mode .chart-container,
+        body.dark-mode .table-container,
+        body.dark-mode .real-time-status {
+            background-color: #2d3748;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .data-table th {
+            background-color: #4a5568;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .data-table tbody tr:hover {
+            background-color: #4a5568;
+        }
+
+        body.dark-mode .search-input {
+            background-color: #4a5568;
+            border-color: #718096;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .bar-value {
+            background: #2d3748;
+            color: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="header-title">Data Visualization Dashboard</h1>
+            <p class="header-subtitle">Sales Data Analysis & Insights (Working Version)</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div id="message"></div>
+            
+            <section>
+                <h2 class="section-title">Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div>
+                            <h3 class="stat-title">Total Records</h3>
+                            <p class="stat-value" id="total-records">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div>
+                            <h3 class="stat-title">Total Sales</h3>
+                            <p class="stat-value" id="total-sales">$0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div>
+                            <h3 class="stat-title">Average Sales</h3>
+                            <p class="stat-value" id="average-sales">$0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div>
+                            <h3 class="stat-title">Total Quantity</h3>
+                            <p class="stat-value" id="total-quantity">0</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">Data Visualizations</h2>
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Sales by Category</h3>
+                        <div class="chart-wrapper">
+                            <div class="bar-chart" id="barChart">
+                                <!-- Bars will be created dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h3 class="chart-title">Sales Trend</h3>
+                        <div class="chart-wrapper">
+                            <div class="line-chart" id="lineChart">
+                                <svg id="lineChartSvg"></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h3 class="chart-title">Category Distribution</h3>
+                        <div class="chart-wrapper">
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div class="pie-chart"></div>
+                                <div class="pie-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: #667eea;"></div>
+                                        <span>Electronics (34%)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: #764ba2;"></div>
+                                        <span>Furniture (31%)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: #ff9f40;"></div>
+                                        <span>Stationery (13%)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">Sales Data Table</h2>
+                <div class="table-container">
+                    <div class="controls">
+                        <input type="text" id="search-input" class="search-input" placeholder="Search products...">
+                        <button class="btn btn-primary" onclick="exportData()">📥 Export CSV</button>
+                        <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh</button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Sales</th>
+                                <th>Quantity</th>
+                                <th>Date</th>
+                                <th>Region</th>
+                                <th>Salesperson</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Dark Mode Toggle Button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+        <span id="theme-icon">🌙</span>
+    </button>
+
+    <!-- Real-time Status -->
+    <div class="real-time-status">
+        <span class="status-indicator" id="status-indicator"></span>
+        <span>Live Updates: <span id="update-count">0</span></span>
+        <button class="btn btn-secondary" onclick="toggleRealTime()" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Pause</button>
+    </div>
+
+    <script>
+        // Full 50 records sales data embedded directly
+        const salesData = [
+            {"id": 1, "product": "Laptop", "category": "Electronics", "sales": 1500, "quantity": 15, "date": "2024-01-15", "region": "North", "salesperson": "John Smith"},
+            {"id": 2, "product": "Mouse", "category": "Electronics", "sales": 250, "quantity": 50, "date": "2024-01-16", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 3, "product": "Keyboard", "category": "Electronics", "sales": 450, "quantity": 30, "date": "2024-01-17", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 4, "product": "Monitor", "category": "Electronics", "sales": 800, "quantity": 20, "date": "2024-01-18", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 5, "product": "Desk Chair", "category": "Furniture", "sales": 1200, "quantity": 12, "date": "2024-01-19", "region": "North", "salesperson": "John Smith"},
+            {"id": 6, "product": "Desk Lamp", "category": "Furniture", "sales": 150, "quantity": 25, "date": "2024-01-20", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 7, "product": "Notebook", "category": "Stationery", "sales": 50, "quantity": 100, "date": "2024-01-21", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 8, "product": "Pen Set", "category": "Stationery", "sales": 30, "quantity": 75, "date": "2024-01-22", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 9, "product": "Headphones", "category": "Electronics", "sales": 600, "quantity": 18, "date": "2024-01-23", "region": "North", "salesperson": "John Smith"},
+            {"id": 10, "product": "Webcam", "category": "Electronics", "sales": 350, "quantity": 22, "date": "2024-01-24", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 11, "product": "Standing Desk", "category": "Furniture", "sales": 1800, "quantity": 8, "date": "2024-01-25", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 12, "product": "Bookshelf", "category": "Furniture", "sales": 950, "quantity": 10, "date": "2024-01-26", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 13, "product": "Calculator", "category": "Stationery", "sales": 45, "quantity": 40, "date": "2024-01-27", "region": "North", "salesperson": "John Smith"},
+            {"id": 14, "product": "Stapler", "category": "Stationery", "sales": 25, "quantity": 30, "date": "2024-01-28", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 15, "product": "USB Hub", "category": "Electronics", "sales": 180, "quantity": 35, "date": "2024-01-29", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 16, "product": "Tablet", "category": "Electronics", "sales": 750, "quantity": 12, "date": "2024-01-30", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 17, "product": "Office Chair", "category": "Furniture", "sales": 850, "quantity": 15, "date": "2024-01-31", "region": "North", "salesperson": "John Smith"},
+            {"id": 18, "product": "Highlighters", "category": "Stationery", "sales": 35, "quantity": 60, "date": "2024-02-01", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 19, "product": "Router", "category": "Electronics", "sales": 420, "quantity": 25, "date": "2024-02-02", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 20, "product": "Filing Cabinet", "category": "Furniture", "sales": 650, "quantity": 8, "date": "2024-02-03", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 21, "product": "Binder Clips", "category": "Stationery", "sales": 15, "quantity": 120, "date": "2024-02-04", "region": "North", "salesperson": "John Smith"},
+            {"id": 22, "product": "Smartphone", "category": "Electronics", "sales": 950, "quantity": 10, "date": "2024-02-05", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 23, "product": "Conference Table", "category": "Furniture", "sales": 2200, "quantity": 3, "date": "2024-02-06", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 24, "product": "Whiteboard", "category": "Furniture", "sales": 450, "quantity": 6, "date": "2024-02-07", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 25, "product": "Markers", "category": "Stationery", "sales": 40, "quantity": 80, "date": "2024-02-08", "region": "North", "salesperson": "John Smith"},
+            {"id": 26, "product": "External Drive", "category": "Electronics", "sales": 280, "quantity": 30, "date": "2024-02-09", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 27, "product": "Reception Desk", "category": "Furniture", "sales": 1500, "quantity": 2, "date": "2024-02-10", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 28, "product": "Paper Clips", "category": "Stationery", "sales": 20, "quantity": 150, "date": "2024-02-11", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 29, "product": "Printer", "category": "Electronics", "sales": 550, "quantity": 7, "date": "2024-02-12", "region": "North", "salesperson": "John Smith"},
+            {"id": 30, "product": "Storage Ottoman", "category": "Furniture", "sales": 380, "quantity": 14, "date": "2024-02-13", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 31, "product": "Envelope Set", "category": "Stationery", "sales": 55, "quantity": 45, "date": "2024-02-14", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 32, "product": "Wireless Mouse", "category": "Electronics", "sales": 320, "quantity": 28, "date": "2024-02-15", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 33, "product": "Lounge Chair", "category": "Furniture", "sales": 950, "quantity": 5, "date": "2024-02-16", "region": "North", "salesperson": "John Smith"},
+            {"id": 34, "product": "Sticky Notes", "category": "Stationery", "sales": 25, "quantity": 90, "date": "2024-02-17", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 35, "product": "Bluetooth Speaker", "category": "Electronics", "sales": 180, "quantity": 40, "date": "2024-02-18", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 36, "product": "Coffee Table", "category": "Furniture", "sales": 750, "quantity": 9, "date": "2024-02-19", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 37, "product": "File Folders", "category": "Stationery", "sales": 65, "quantity": 55, "date": "2024-02-20", "region": "North", "salesperson": "John Smith"},
+            {"id": 38, "product": "Power Bank", "category": "Electronics", "sales": 95, "quantity": 65, "date": "2024-02-21", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 39, "product": "Side Table", "category": "Furniture", "sales": 320, "quantity": 11, "date": "2024-02-22", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 40, "product": "Tape Dispenser", "category": "Stationery", "sales": 45, "quantity": 35, "date": "2024-02-23", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 41, "product": "HDMI Cable", "category": "Electronics", "sales": 75, "quantity": 85, "date": "2024-02-24", "region": "North", "salesperson": "John Smith"},
+            {"id": 42, "product": "Executive Chair", "category": "Furniture", "sales": 1250, "quantity": 4, "date": "2024-02-25", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 43, "product": "Legal Pads", "category": "Stationery", "sales": 85, "quantity": 70, "date": "2024-02-26", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 44, "product": "USB Cable", "category": "Electronics", "sales": 35, "quantity": 95, "date": "2024-02-27", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 45, "product": "Credenza", "category": "Furniture", "sales": 1800, "quantity": 3, "date": "2024-02-28", "region": "North", "salesperson": "John Smith"},
+            {"id": 46, "product": "Scissors", "category": "Stationery", "sales": 30, "quantity": 50, "date": "2024-02-29", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 47, "product": "Laptop Stand", "category": "Electronics", "sales": 150, "quantity": 32, "date": "2024-03-01", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 48, "product": "Bookcase", "category": "Furniture", "sales": 850, "quantity": 7, "date": "2024-03-02", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 49, "product": "Eraser Set", "category": "Stationery", "sales": 20, "quantity": 110, "date": "2024-03-03", "region": "North", "salesperson": "John Smith"},
+            {"id": 50, "product": "Wireless Charger", "category": "Electronics", "sales": 125, "quantity": 45, "date": "2024-03-04", "region": "South", "salesperson": "Sarah Johnson"}
+        ];
+
+        // Global variables
+        let updateCount = 0;
+        let isRealTimeActive = true;
+        let realTimeInterval;
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDashboard();
+        });
+
+        function initializeDashboard() {
+            console.log('Initializing working dashboard...');
+            showMessage('Dashboard loaded successfully! (Working Version)', 'success');
+            updateStatistics();
+            createCharts();
+            populateTable();
+            setupEventListeners();
+            startRealTimeUpdates();
+            setupDarkMode();
+            console.log('Working dashboard initialization complete');
+        }
+
+        function updateStatistics() {
+            const totalRecords = salesData.length;
+            const totalSales = salesData.reduce((sum, record) => sum + record.sales, 0);
+            const averageSales = totalSales / totalRecords;
+            const totalQuantity = salesData.reduce((sum, record) => sum + record.quantity, 0);
+
+            // Animate the numbers
+            animateValue('total-records', 0, totalRecords, 1000);
+            animateValue('total-sales', 0, totalSales, 1000, '$');
+            animateValue('average-sales', 0, averageSales, 1000, '$');
+            animateValue('total-quantity', 0, totalQuantity, 1000);
+        }
+
+        function animateValue(elementId, start, end, duration, prefix = '') {
+            const element = document.getElementById(elementId);
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = prefix + Math.round(current).toLocaleString();
+            }, 16);
+        }
+
+        function createCharts() {
+            console.log('Creating working charts...');
+            
+            // Aggregate data by category
+            const categoryData = {};
+            const dateData = {};
+            
+            salesData.forEach(record => {
+                // Category aggregation
+                if (!categoryData[record.category]) {
+                    categoryData[record.category] = 0;
+                }
+                categoryData[record.category] += record.sales;
+                
+                // Date aggregation
+                if (!dateData[record.date]) {
+                    dateData[record.date] = 0;
+                }
+                dateData[record.date] += record.sales;
+            });
+            
+            console.log('Category data:', categoryData);
+            
+            // Create Bar Chart
+            createBarChart(categoryData);
+            
+            // Create Line Chart
+            createLineChart(dateData);
+        }
+
+        function createBarChart(categoryData) {
+            const barChart = document.getElementById('barChart');
+            barChart.innerHTML = '';
+            
+            const maxValue = Math.max(...Object.values(categoryData));
+            const colors = ['#667eea', '#764ba2', '#ff9f40'];
+            let colorIndex = 0;
+            
+            for (const [category, value] of Object.entries(categoryData)) {
+                const barHeight = (value / maxValue) * 100;
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = barHeight + '%';
+                bar.style.background = `linear-gradient(to top, ${colors[colorIndex]}, ${colors[colorIndex]}dd)`;
+                
+                const barValue = document.createElement('div');
+                barValue.className = 'bar-value';
+                barValue.textContent = '$' + value.toLocaleString();
+                
+                const barLabel = document.createElement('div');
+                barLabel.className = 'bar-label';
+                barLabel.textContent = category;
+                
+                bar.appendChild(barValue);
+                bar.appendChild(barLabel);
+                
+                bar.addEventListener('click', () => {
+                    showMessage(`Selected ${category}: $${value.toLocaleString()}`, 'success');
+                    filterByCategory(category);
+                });
+                
+                barChart.appendChild(bar);
+                colorIndex++;
+            }
+        }
+
+        function createLineChart(dateData) {
+            const svg = document.getElementById('lineChartSvg');
+            const width = svg.parentElement.clientWidth;
+            const height = 250;
+            
+            svg.setAttribute('width', width);
+            svg.setAttribute('height', height);
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            
+            const sortedDates = Object.keys(dateData).sort();
+            const values = sortedDates.map(date => dateData[date]);
+            const maxValue = Math.max(...values);
+            
+            // Create gradient for area
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+            gradient.setAttribute('id', 'lineGradient');
+            gradient.setAttribute('x1', '0%');
+            gradient.setAttribute('y1', '0%');
+            gradient.setAttribute('x2', '0%');
+            gradient.setAttribute('y2', '100%');
+            
+            const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop1.setAttribute('offset', '0%');
+            stop1.setAttribute('style', 'stop-color:#667eea;stop-opacity:0.3');
+            
+            const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop2.setAttribute('offset', '100%');
+            stop2.setAttribute('style', 'stop-color:#667eea;stop-opacity:0');
+            
+            gradient.appendChild(stop1);
+            gradient.appendChild(stop2);
+            defs.appendChild(gradient);
+            svg.appendChild(defs);
+            
+            // Create area path
+            const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            let areaD = `M 10 ${height - 20}`;
+            
+            sortedDates.forEach((date, index) => {
+                const x = 10 + (index * (width - 20) / (sortedDates.length - 1));
+                const y = height - 20 - (dateData[date] / maxValue) * (height - 40);
+                areaD += ` L ${x} ${y}`;
+            });
+            
+            areaD += ` L ${width - 10} ${height - 20} Z`;
+            areaPath.setAttribute('d', areaD);
+            areaPath.setAttribute('fill', 'url(#lineGradient)');
+            svg.appendChild(areaPath);
+            
+            // Create line path
+            const linePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            let lineD = `M 10 ${height - 20}`;
+            
+            sortedDates.forEach((date, index) => {
+                const x = 10 + (index * (width - 20) / (sortedDates.length - 1));
+                const y = height - 20 - (dateData[date] / maxValue) * (height - 40);
+                lineD += ` L ${x} ${y}`;
+            });
+            
+            linePath.setAttribute('d', lineD);
+            linePath.setAttribute('fill', 'none');
+            linePath.setAttribute('stroke', '#667eea');
+            linePath.setAttribute('stroke-width', '2');
+            svg.appendChild(linePath);
+            
+            // Add dots
+            sortedDates.forEach((date, index) => {
+                const x = 10 + (index * (width - 20) / (sortedDates.length - 1));
+                const y = height - 20 - (dateData[date] / maxValue) * (height - 40);
+                
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', x);
+                circle.setAttribute('cy', y);
+                circle.setAttribute('r', '4');
+                circle.setAttribute('fill', '#667eea');
+                circle.setAttribute('stroke', 'white');
+                circle.setAttribute('stroke-width', '2');
+                
+                circle.addEventListener('mouseenter', (e) => {
+                    const tooltip = document.createElement('div');
+                    tooltip.style.position = 'absolute';
+                    tooltip.style.background = 'rgba(0,0,0,0.8)';
+                    tooltip.style.color = 'white';
+                    tooltip.style.padding = '5px 10px';
+                    tooltip.style.borderRadius = '4px';
+                    tooltip.style.fontSize = '12px';
+                    tooltip.style.pointerEvents = 'none';
+                    tooltip.style.zIndex = '1000';
+                    tooltip.textContent = `${date}: $${dateData[date].toLocaleString()}`;
+                    tooltip.style.left = (e.pageX + 10) + 'px';
+                    tooltip.style.top = (e.pageY - 30) + 'px';
+                    document.body.appendChild(tooltip);
+                    
+                    circle.addEventListener('mouseleave', () => {
+                        if (tooltip.parentNode) {
+                            tooltip.parentNode.removeChild(tooltip);
+                        }
+                    }, { once: true });
+                });
+                
+                svg.appendChild(circle);
+            });
+        }
+
+        function populateTable() {
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '';
+
+            salesData.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.id}</td>
+                    <td>${record.product}</td>
+                    <td>${record.category}</td>
+                    <td>$${record.sales.toLocaleString()}</td>
+                    <td>${record.quantity}</td>
+                    <td>${record.date}</td>
+                    <td>${record.region}</td>
+                    <td>${record.salesperson}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function setupEventListeners() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', filterTable);
+        }
+
+        function filterTable() {
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            const tableRows = document.querySelectorAll('#table-body tr');
+            
+            tableRows.forEach(row => {
+                const product = row.cells[1].textContent.toLowerCase();
+                const category = row.cells[2].textContent.toLowerCase();
+                
+                if (product.includes(searchInput) || category.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function filterByCategory(category) {
+            const tableRows = document.querySelectorAll('#table-body tr');
+            
+            tableRows.forEach(row => {
+                const rowCategory = row.cells[2].textContent;
+                if (rowCategory === category) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            // Scroll to table
+            document.querySelector('.table-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function exportData() {
+            const headers = ['ID', 'Product', 'Category', 'Sales', 'Quantity', 'Date', 'Region', 'Salesperson'];
+            const csvContent = [
+                headers.join(','),
+                ...salesData.map(record => [
+                    record.id,
+                    `"${record.product}"`,
+                    record.category,
+                    record.sales,
+                    record.quantity,
+                    record.date,
+                    record.region,
+                    `"${record.salesperson}"`
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sales_data_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showMessage('Data exported successfully!', 'success');
+        }
+
+        function refreshData() {
+            showMessage('Refreshing data...', 'success');
+            setTimeout(() => {
+                updateStatistics();
+                createCharts();
+                populateTable();
+                showMessage('Data refreshed successfully!', 'success');
+            }, 1000);
+        }
+
+        function setupDarkMode() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-icon').textContent = '☀️';
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            document.getElementById('theme-icon').textContent = isDarkMode ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+
+        function startRealTimeUpdates() {
+            realTimeInterval = setInterval(() => {
+                if (isRealTimeActive) {
+                    simulateRealTimeUpdate();
+                }
+            }, 5000);
+        }
+
+        function simulateRealTimeUpdate() {
+            // Randomly update a sales value
+            const randomIndex = Math.floor(Math.random() * salesData.length);
+            const adjustment = (Math.random() - 0.5) * 100;
+            salesData[randomIndex].sales = Math.max(10, salesData[randomIndex].sales + adjustment);
+            
+            // Update dashboard
+            updateStatistics();
+            createCharts();
+            populateTable();
+            
+            // Update counter
+            updateCount++;
+            document.getElementById('update-count').textContent = updateCount;
+            
+            // Show notification every 5 updates
+            if (updateCount % 5 === 0) {
+                showMessage(`Live update: ${salesData[randomIndex].product} sales updated to $${salesData[randomIndex].sales.toFixed(2)}`, 'success');
+            }
+        }
+
+        function toggleRealTime() {
+            isRealTimeActive = !isRealTimeActive;
+            const button = event.target;
+            const indicator = document.getElementById('status-indicator');
+            
+            if (isRealTimeActive) {
+                button.textContent = 'Pause';
+                indicator.classList.remove('paused');
+                showMessage('Real-time updates resumed', 'success');
+            } else {
+                button.textContent = 'Resume';
+                indicator.classList.add('paused');
+                showMessage('Real-time updates paused', 'error');
+            }
+        }
+
+        function showMessage(message, type = 'success') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = `message ${type === 'error' ? 'error' : ''}`;
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

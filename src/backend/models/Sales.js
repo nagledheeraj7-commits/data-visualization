@@ -254,6 +254,24 @@ export class Sales {
             regionStats
         };
     }
+
+
+
+
+  // ADD THIS FUNCTION HERE
+  static async findAll(filters = {}) {
+
+    const fs = await import('fs');
+    const path = await import('path');
+
+    const dataPath = path.join(process.cwd(), 'src/backend/data/sales.json');
+
+    const rawData = fs.readFileSync(dataPath, 'utf8');
+    let sales = JSON.parse(rawData);
+
+    return sales;
+  }
+
 }
 
 export default Sales;
