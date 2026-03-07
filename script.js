@@ -436,11 +436,26 @@ function handlePasswordResetConfirm(e, email) {
 }
 
 // Enhanced login handler
+loginForm.addEventListener('submit', handleLogin);
+
 function handleLogin(e) {
     e.preventDefault();
-    
+
     const employeeId = document.getElementById('login-employee-id').value.trim();
     const password = document.getElementById('login-password').value;
+
+    if (employeeId === "12345678" && password === "12345678") {
+
+        // save login session
+        localStorage.setItem("loggedIn", "true");
+
+        // hide login modal
+        document.getElementById("login-modal").style.display = "none";
+
+    } else {
+        alert("Invalid Employee ID or Password");
+    }
+}
     
     // Simple validation
     if (!employeeId || !password) {
