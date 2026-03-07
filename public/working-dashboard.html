@@ -863,14 +863,29 @@
         }
 
         function filterTable() {
-            const searchInput = document.getElementById('search-input').value.toLowerCase();
-            const tableRows = document.querySelectorAll('#table-body tr');
+            const searchInput = document.getElementById('search-input');
+            const tableBody = document.getElementById('table-body');
+            
+            // Validate elements exist
+            if (!searchInput || !tableBody) {
+                console.error('Required DOM elements not found');
+                return;
+            }
+            
+            const searchValue = searchInput.value.toLowerCase();
+            const tableRows = tableBody.querySelectorAll('tr');
             
             tableRows.forEach(row => {
+                // Validate row has enough cells
+                if (row.cells.length < 3) {
+                    row.style.display = 'none';
+                    return;
+                }
+                
                 const product = row.cells[1].textContent.toLowerCase();
                 const category = row.cells[2].textContent.toLowerCase();
                 
-                if (product.includes(searchInput) || category.includes(searchInput)) {
+                if (product.includes(searchValue) || category.includes(searchValue)) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
@@ -949,6 +964,11 @@
         }
 
         function startRealTimeUpdates() {
+            // Clear existing interval to prevent memory leaks
+            if (realTimeInterval) {
+                clearInterval(realTimeInterval);
+            }
+            
             realTimeInterval = setInterval(() => {
                 if (isRealTimeActive) {
                     simulateRealTimeUpdate();
@@ -957,10 +977,24 @@
         }
 
         function simulateRealTimeUpdate() {
+            // Validate data exists
+            if (!salesData || salesData.length === 0) {
+                console.error('No sales data available for real-time update');
+                return;
+            }
+            
             // Randomly update a sales value
             const randomIndex = Math.floor(Math.random() * salesData.length);
+            const record = salesData[randomIndex];
+            
+            // Validate record has sales property
+            if (!record || typeof record.sales === 'undefined') {
+                console.error('Invalid record found at index:', randomIndex);
+                return;
+            }
+            
             const adjustment = (Math.random() - 0.5) * 100;
-            salesData[randomIndex].sales = Math.max(10, salesData[randomIndex].sales + adjustment);
+            record.sales = Math.max(10, record.sales + adjustment);
             
             // Update dashboard
             updateStatistics();
@@ -977,7 +1011,7 @@
             }
         }
 
-        function toggleRealTime() {
+        function toggleRealTime(event) {
             isRealTimeActive = !isRealTimeActive;
             const button = event.target;
             const indicator = document.getElementById('status-indicator');
