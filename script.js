@@ -1,13 +1,9 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
-    if (localStorage.getItem("loggedIn") === "true") {
+    const loginModal = document.getElementById("login-modal");
 
-        const loginModal = document.getElementById("login-modal");
-
-        if (loginModal) {
-            loginModal.style.display = "none";
-        }
-
+    if (loginModal) {
+        loginModal.remove();
     }
 
 });
@@ -237,7 +233,7 @@ function setupLogin() {
     setupTabSwitching();
     
     if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
+       
     }
     
     if (registerForm) {
@@ -451,23 +447,7 @@ function handlePasswordResetConfirm(e, email) {
 // Enhanced login handler
 loginForm.addEventListener('submit', handleLogin);
 
-function handleLogin(e) {
-    e.preventDefault();
 
-    const employeeId = document.getElementById('login-employee-id').value.trim();
-    const password = document.getElementById('login-password').value;
-
-    if (employeeId === "12345678" && password === "1234567878") {
-
-        localStorage.setItem("loggedIn", "true");
-
-        // reload page after login
-        window.location.reload();
-
-    } else {
-        alert("Invalid Employee ID or Password");
-    }
-}
     
     // Simple validation
     if (!employeeId || !password) {
