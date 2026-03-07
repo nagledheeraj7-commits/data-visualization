@@ -1,3 +1,8 @@
+window.onload = function() {
+    if (localStorage.getItem("loggedIn") === "true") {
+        document.getElementById("login-modal").style.display = "none";
+    }
+};
 // Global variables to store data and chart instances
 let salesData = [];
 let barChart = null;
@@ -437,7 +442,6 @@ function handlePasswordResetConfirm(e, email) {
 
 // Enhanced login handler
 loginForm.addEventListener('submit', handleLogin);
-
 function handleLogin(e) {
     e.preventDefault();
 
@@ -446,16 +450,20 @@ function handleLogin(e) {
 
     if (employeeId === "12345678" && password === "12345678") {
 
-        // save login session
+        // Save login
         localStorage.setItem("loggedIn", "true");
 
-        // hide login modal
+        // Hide login modal
         document.getElementById("login-modal").style.display = "none";
+
+        // Show dashboard
+        document.getElementById("dashboard").style.display = "block";
 
     } else {
         alert("Invalid Employee ID or Password");
     }
 }
+
     
     // Simple validation
     if (!employeeId || !password) {
