@@ -57,19 +57,20 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
 
         .stat-card {
             background: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-height: 120px;
         }
 
         .stat-card:hover {
@@ -78,14 +79,23 @@
         }
 
         .stat-icon {
-            font-size: 3rem;
-            margin-right: 1.5rem;
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .stat-content {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
         }
 
         .stat-value {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #333;
+            word-wrap: break-word;
+            line-height: 1.2;
         }
 
         .stat-title {
@@ -349,6 +359,16 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.9rem;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .real-time-status.live {
+            border-left: 4px solid #28a745;
+        }
+
+        .real-time-status.paused {
+            border-left: 4px solid #dc3545;
         }
 
         .status-indicator {
@@ -362,6 +382,50 @@
         .status-indicator.paused {
             background-color: #dc3545;
             animation: none;
+        }
+
+        .live-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .live-btn {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .live-btn.pause {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .live-btn.pause:hover {
+            background-color: #c82333;
+        }
+
+        .live-btn.resume {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .live-btn.resume:hover {
+            background-color: #218838;
+        }
+
+        .live-status-text {
+            font-weight: 600;
+            color: #28a745;
+        }
+
+        .live-status-text.paused {
+            color: #dc3545;
         }
 
         @keyframes pulse {
@@ -385,6 +449,15 @@
             background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
         }
 
+        body.dark-mode .header-title,
+        body.dark-mode .header-subtitle {
+            color: white;
+        }
+
+        body.dark-mode .section-title {
+            color: #e0e0e0;
+        }
+
         body.dark-mode .stat-card,
         body.dark-mode .chart-container,
         body.dark-mode .table-container,
@@ -393,8 +466,24 @@
             color: #e0e0e0;
         }
 
+        body.dark-mode .stat-title {
+            color: #a0aec0;
+        }
+
+        body.dark-mode .stat-value {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .chart-title {
+            color: #e0e0e0;
+        }
+
         body.dark-mode .data-table th {
             background-color: #4a5568;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .data-table td {
             color: #e0e0e0;
         }
 
@@ -408,14 +497,110 @@
             color: #e0e0e0;
         }
 
+        body.dark-mode .search-input::placeholder {
+            color: #a0aec0;
+        }
+
         body.dark-mode .bar-value {
             background: #2d3748;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .bar-label {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .legend-item {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .btn-primary {
+            background-color: #667eea;
+            color: white;
+        }
+
+        body.dark-mode .btn-primary:hover {
+            background-color: #5a6fd8;
+        }
+
+        body.dark-mode .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        body.dark-mode .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        body.dark-mode .message {
+            background-color: #2d3748;
+            color: #e0e0e0;
+            border-left-color: #667eea;
+        }
+
+        body.dark-mode .error {
+            background-color: #4a5568;
+            color: #fed7d7;
+            border-left-color: #fc8181;
+        }
+
+        body.dark-mode .real-time-status {
+            background-color: #2d3748;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .live-status-text {
+            color: #28a745;
+        }
+
+        body.dark-mode .live-status-text.paused {
+            color: #dc3545;
+        }
+
+        .live-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .search-stats {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #666;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        body.dark-mode .search-stats {
+            background-color: #4a5568;
+            color: #e0e0e0;
+            border-left-color: #667eea;
+        }
+
+        body.dark-mode .search-stats strong {
             color: #e0e0e0;
         }
 
         @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .stat-card {
+                padding: 1rem;
+                min-height: 100px;
+            }
+            
+            .stat-icon {
+                font-size: 2rem;
+                margin-right: 0.75rem;
+            }
+            
+            .stat-value {
+                font-size: 1.25rem;
             }
             
             .controls {
@@ -445,28 +630,28 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon">📊</div>
-                        <div>
+                        <div class="stat-content">
                             <h3 class="stat-title">Total Records</h3>
                             <p class="stat-value" id="total-records">0</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">💰</div>
-                        <div>
+                        <div class="stat-content">
                             <h3 class="stat-title">Total Sales</h3>
-                            <p class="stat-value" id="total-sales">$0</p>
+                            <p class="stat-value" id="total-sales">₹0</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">📈</div>
-                        <div>
+                        <div class="stat-content">
                             <h3 class="stat-title">Average Sales</h3>
-                            <p class="stat-value" id="average-sales">$0</p>
+                            <p class="stat-value" id="average-sales">₹0</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">📦</div>
-                        <div>
+                        <div class="stat-content">
                             <h3 class="stat-title">Total Quantity</h3>
                             <p class="stat-value" id="total-quantity">0</p>
                         </div>
@@ -522,10 +707,11 @@
                 <h2 class="section-title">Sales Data Table</h2>
                 <div class="table-container">
                     <div class="controls">
-                        <input type="text" id="search-input" class="search-input" placeholder="Search products...">
+                        <input type="text" id="search-input" class="search-input" placeholder="Search products or categories...">
                         <button class="btn btn-primary" onclick="exportData()">📥 Export CSV</button>
                         <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh</button>
                     </div>
+                    <div id="search-stats" class="search-stats"></div>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -554,65 +740,70 @@
     </button>
 
     <!-- Real-time Status -->
-    <div class="real-time-status">
+    <div class="real-time-status live" id="real-time-status">
         <span class="status-indicator" id="status-indicator"></span>
-        <span>Live Updates: <span id="update-count">0</span></span>
-        <button class="btn btn-secondary" onclick="toggleRealTime()" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Pause</button>
+        <div class="live-info">
+            <span class="live-status-text" id="live-status-text">🔴 LIVE</span>
+            <span class="update-counter">Updates: <span id="update-count">0</span></span>
+        </div>
+        <div class="live-controls">
+            <button class="live-btn pause" id="live-toggle-btn" onclick="toggleRealTime()">⏸️ Pause</button>
+        </div>
     </div>
 
     <script>
-        // Full 50 records sales data embedded directly
+        // Full 50 records sales data embedded directly (converted to INR at ₹83 per $1)
         const salesData = [
-            {"id": 1, "product": "Laptop", "category": "Electronics", "sales": 1500, "quantity": 15, "date": "2024-01-15", "region": "North", "salesperson": "John Smith"},
-            {"id": 2, "product": "Mouse", "category": "Electronics", "sales": 250, "quantity": 50, "date": "2024-01-16", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 3, "product": "Keyboard", "category": "Electronics", "sales": 450, "quantity": 30, "date": "2024-01-17", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 4, "product": "Monitor", "category": "Electronics", "sales": 800, "quantity": 20, "date": "2024-01-18", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 5, "product": "Desk Chair", "category": "Furniture", "sales": 1200, "quantity": 12, "date": "2024-01-19", "region": "North", "salesperson": "John Smith"},
-            {"id": 6, "product": "Desk Lamp", "category": "Furniture", "sales": 150, "quantity": 25, "date": "2024-01-20", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 7, "product": "Notebook", "category": "Stationery", "sales": 50, "quantity": 100, "date": "2024-01-21", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 8, "product": "Pen Set", "category": "Stationery", "sales": 30, "quantity": 75, "date": "2024-01-22", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 9, "product": "Headphones", "category": "Electronics", "sales": 600, "quantity": 18, "date": "2024-01-23", "region": "North", "salesperson": "John Smith"},
-            {"id": 10, "product": "Webcam", "category": "Electronics", "sales": 350, "quantity": 22, "date": "2024-01-24", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 11, "product": "Standing Desk", "category": "Furniture", "sales": 1800, "quantity": 8, "date": "2024-01-25", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 12, "product": "Bookshelf", "category": "Furniture", "sales": 950, "quantity": 10, "date": "2024-01-26", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 13, "product": "Calculator", "category": "Stationery", "sales": 45, "quantity": 40, "date": "2024-01-27", "region": "North", "salesperson": "John Smith"},
-            {"id": 14, "product": "Stapler", "category": "Stationery", "sales": 25, "quantity": 30, "date": "2024-01-28", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 15, "product": "USB Hub", "category": "Electronics", "sales": 180, "quantity": 35, "date": "2024-01-29", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 16, "product": "Tablet", "category": "Electronics", "sales": 750, "quantity": 12, "date": "2024-01-30", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 17, "product": "Office Chair", "category": "Furniture", "sales": 850, "quantity": 15, "date": "2024-01-31", "region": "North", "salesperson": "John Smith"},
-            {"id": 18, "product": "Highlighters", "category": "Stationery", "sales": 35, "quantity": 60, "date": "2024-02-01", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 19, "product": "Router", "category": "Electronics", "sales": 420, "quantity": 25, "date": "2024-02-02", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 20, "product": "Filing Cabinet", "category": "Furniture", "sales": 650, "quantity": 8, "date": "2024-02-03", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 21, "product": "Binder Clips", "category": "Stationery", "sales": 15, "quantity": 120, "date": "2024-02-04", "region": "North", "salesperson": "John Smith"},
-            {"id": 22, "product": "Smartphone", "category": "Electronics", "sales": 950, "quantity": 10, "date": "2024-02-05", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 23, "product": "Conference Table", "category": "Furniture", "sales": 2200, "quantity": 3, "date": "2024-02-06", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 24, "product": "Whiteboard", "category": "Furniture", "sales": 450, "quantity": 6, "date": "2024-02-07", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 25, "product": "Markers", "category": "Stationery", "sales": 40, "quantity": 80, "date": "2024-02-08", "region": "North", "salesperson": "John Smith"},
-            {"id": 26, "product": "External Drive", "category": "Electronics", "sales": 280, "quantity": 30, "date": "2024-02-09", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 27, "product": "Reception Desk", "category": "Furniture", "sales": 1500, "quantity": 2, "date": "2024-02-10", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 28, "product": "Paper Clips", "category": "Stationery", "sales": 20, "quantity": 150, "date": "2024-02-11", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 29, "product": "Printer", "category": "Electronics", "sales": 550, "quantity": 7, "date": "2024-02-12", "region": "North", "salesperson": "John Smith"},
-            {"id": 30, "product": "Storage Ottoman", "category": "Furniture", "sales": 380, "quantity": 14, "date": "2024-02-13", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 31, "product": "Envelope Set", "category": "Stationery", "sales": 55, "quantity": 45, "date": "2024-02-14", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 32, "product": "Wireless Mouse", "category": "Electronics", "sales": 320, "quantity": 28, "date": "2024-02-15", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 33, "product": "Lounge Chair", "category": "Furniture", "sales": 950, "quantity": 5, "date": "2024-02-16", "region": "North", "salesperson": "John Smith"},
-            {"id": 34, "product": "Sticky Notes", "category": "Stationery", "sales": 25, "quantity": 90, "date": "2024-02-17", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 35, "product": "Bluetooth Speaker", "category": "Electronics", "sales": 180, "quantity": 40, "date": "2024-02-18", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 36, "product": "Coffee Table", "category": "Furniture", "sales": 750, "quantity": 9, "date": "2024-02-19", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 37, "product": "File Folders", "category": "Stationery", "sales": 65, "quantity": 55, "date": "2024-02-20", "region": "North", "salesperson": "John Smith"},
-            {"id": 38, "product": "Power Bank", "category": "Electronics", "sales": 95, "quantity": 65, "date": "2024-02-21", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 39, "product": "Side Table", "category": "Furniture", "sales": 320, "quantity": 11, "date": "2024-02-22", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 40, "product": "Tape Dispenser", "category": "Stationery", "sales": 45, "quantity": 35, "date": "2024-02-23", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 41, "product": "HDMI Cable", "category": "Electronics", "sales": 75, "quantity": 85, "date": "2024-02-24", "region": "North", "salesperson": "John Smith"},
-            {"id": 42, "product": "Executive Chair", "category": "Furniture", "sales": 1250, "quantity": 4, "date": "2024-02-25", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 43, "product": "Legal Pads", "category": "Stationery", "sales": 85, "quantity": 70, "date": "2024-02-26", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 44, "product": "USB Cable", "category": "Electronics", "sales": 35, "quantity": 95, "date": "2024-02-27", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 45, "product": "Credenza", "category": "Furniture", "sales": 1800, "quantity": 3, "date": "2024-02-28", "region": "North", "salesperson": "John Smith"},
-            {"id": 46, "product": "Scissors", "category": "Stationery", "sales": 30, "quantity": 50, "date": "2024-02-29", "region": "South", "salesperson": "Sarah Johnson"},
-            {"id": 47, "product": "Laptop Stand", "category": "Electronics", "sales": 150, "quantity": 32, "date": "2024-03-01", "region": "East", "salesperson": "Mike Davis"},
-            {"id": 48, "product": "Bookcase", "category": "Furniture", "sales": 850, "quantity": 7, "date": "2024-03-02", "region": "West", "salesperson": "Emily Wilson"},
-            {"id": 49, "product": "Eraser Set", "category": "Stationery", "sales": 20, "quantity": 110, "date": "2024-03-03", "region": "North", "salesperson": "John Smith"},
-            {"id": 50, "product": "Wireless Charger", "category": "Electronics", "sales": 125, "quantity": 45, "date": "2024-03-04", "region": "South", "salesperson": "Sarah Johnson"}
+            {"id": 1, "product": "Laptop", "category": "Electronics", "sales": 124500, "quantity": 15, "date": "2024-01-15", "region": "North", "salesperson": "John Smith"},
+            {"id": 2, "product": "Mouse", "category": "Electronics", "sales": 20750, "quantity": 50, "date": "2024-01-16", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 3, "product": "Keyboard", "category": "Electronics", "sales": 37350, "quantity": 30, "date": "2024-01-17", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 4, "product": "Monitor", "category": "Electronics", "sales": 66400, "quantity": 20, "date": "2024-01-18", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 5, "product": "Desk Chair", "category": "Furniture", "sales": 99600, "quantity": 12, "date": "2024-01-19", "region": "North", "salesperson": "John Smith"},
+            {"id": 6, "product": "Desk Lamp", "category": "Furniture", "sales": 12450, "quantity": 25, "date": "2024-01-20", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 7, "product": "Notebook", "category": "Stationery", "sales": 4150, "quantity": 100, "date": "2024-01-21", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 8, "product": "Pen Set", "category": "Stationery", "sales": 2490, "quantity": 75, "date": "2024-01-22", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 9, "product": "Headphones", "category": "Electronics", "sales": 49800, "quantity": 18, "date": "2024-01-23", "region": "North", "salesperson": "John Smith"},
+            {"id": 10, "product": "Webcam", "category": "Electronics", "sales": 29050, "quantity": 22, "date": "2024-01-24", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 11, "product": "Standing Desk", "category": "Furniture", "sales": 149400, "quantity": 8, "date": "2024-01-25", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 12, "product": "Bookshelf", "category": "Furniture", "sales": 78850, "quantity": 10, "date": "2024-01-26", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 13, "product": "Calculator", "category": "Stationery", "sales": 3735, "quantity": 40, "date": "2024-01-27", "region": "North", "salesperson": "John Smith"},
+            {"id": 14, "product": "Stapler", "category": "Stationery", "sales": 2075, "quantity": 30, "date": "2024-01-28", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 15, "product": "USB Hub", "category": "Electronics", "sales": 14940, "quantity": 35, "date": "2024-01-29", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 16, "product": "Tablet", "category": "Electronics", "sales": 62250, "quantity": 12, "date": "2024-01-30", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 17, "product": "Office Chair", "category": "Furniture", "sales": 70550, "quantity": 15, "date": "2024-01-31", "region": "North", "salesperson": "John Smith"},
+            {"id": 18, "product": "Highlighters", "category": "Stationery", "sales": 2905, "quantity": 60, "date": "2024-02-01", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 19, "product": "Router", "category": "Electronics", "sales": 34860, "quantity": 25, "date": "2024-02-02", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 20, "product": "Filing Cabinet", "category": "Furniture", "sales": 53950, "quantity": 8, "date": "2024-02-03", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 21, "product": "Binder Clips", "category": "Stationery", "sales": 1245, "quantity": 120, "date": "2024-02-04", "region": "North", "salesperson": "John Smith"},
+            {"id": 22, "product": "Smartphone", "category": "Electronics", "sales": 78850, "quantity": 10, "date": "2024-02-05", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 23, "product": "Conference Table", "category": "Furniture", "sales": 182600, "quantity": 3, "date": "2024-02-06", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 24, "product": "Whiteboard", "category": "Furniture", "sales": 37350, "quantity": 6, "date": "2024-02-07", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 25, "product": "Markers", "category": "Stationery", "sales": 3320, "quantity": 80, "date": "2024-02-08", "region": "North", "salesperson": "John Smith"},
+            {"id": 26, "product": "External Drive", "category": "Electronics", "sales": 23240, "quantity": 30, "date": "2024-02-09", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 27, "product": "Reception Desk", "category": "Furniture", "sales": 124500, "quantity": 2, "date": "2024-02-10", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 28, "product": "Paper Clips", "category": "Stationery", "sales": 1660, "quantity": 150, "date": "2024-02-11", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 29, "product": "Printer", "category": "Electronics", "sales": 45650, "quantity": 7, "date": "2024-02-12", "region": "North", "salesperson": "John Smith"},
+            {"id": 30, "product": "Storage Ottoman", "category": "Furniture", "sales": 31540, "quantity": 14, "date": "2024-02-13", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 31, "product": "Envelope Set", "category": "Stationery", "sales": 4565, "quantity": 45, "date": "2024-02-14", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 32, "product": "Wireless Mouse", "category": "Electronics", "sales": 26560, "quantity": 28, "date": "2024-02-15", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 33, "product": "Lounge Chair", "category": "Furniture", "sales": 78850, "quantity": 5, "date": "2024-02-16", "region": "North", "salesperson": "John Smith"},
+            {"id": 34, "product": "Sticky Notes", "category": "Stationery", "sales": 2075, "quantity": 90, "date": "2024-02-17", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 35, "product": "Bluetooth Speaker", "category": "Electronics", "sales": 14940, "quantity": 40, "date": "2024-02-18", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 36, "product": "Coffee Table", "category": "Furniture", "sales": 62250, "quantity": 9, "date": "2024-02-19", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 37, "product": "File Folders", "category": "Stationery", "sales": 5395, "quantity": 55, "date": "2024-02-20", "region": "North", "salesperson": "John Smith"},
+            {"id": 38, "product": "Power Bank", "category": "Electronics", "sales": 7885, "quantity": 65, "date": "2024-02-21", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 39, "product": "Side Table", "category": "Furniture", "sales": 26560, "quantity": 11, "date": "2024-02-22", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 40, "product": "Tape Dispenser", "category": "Stationery", "sales": 3735, "quantity": 35, "date": "2024-02-23", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 41, "product": "HDMI Cable", "category": "Electronics", "sales": 6225, "quantity": 85, "date": "2024-02-24", "region": "North", "salesperson": "John Smith"},
+            {"id": 42, "product": "Executive Chair", "category": "Furniture", "sales": 103750, "quantity": 4, "date": "2024-02-25", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 43, "product": "Legal Pads", "category": "Stationery", "sales": 7055, "quantity": 70, "date": "2024-02-26", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 44, "product": "USB Cable", "category": "Electronics", "sales": 2905, "quantity": 95, "date": "2024-02-27", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 45, "product": "Credenza", "category": "Furniture", "sales": 149400, "quantity": 3, "date": "2024-02-28", "region": "North", "salesperson": "John Smith"},
+            {"id": 46, "product": "Scissors", "category": "Stationery", "sales": 2490, "quantity": 50, "date": "2024-02-29", "region": "South", "salesperson": "Sarah Johnson"},
+            {"id": 47, "product": "Laptop Stand", "category": "Electronics", "sales": 12450, "quantity": 32, "date": "2024-03-01", "region": "East", "salesperson": "Mike Davis"},
+            {"id": 48, "product": "Bookcase", "category": "Furniture", "sales": 70550, "quantity": 7, "date": "2024-03-02", "region": "West", "salesperson": "Emily Wilson"},
+            {"id": 49, "product": "Eraser Set", "category": "Stationery", "sales": 1660, "quantity": 110, "date": "2024-03-03", "region": "North", "salesperson": "John Smith"},
+            {"id": 50, "product": "Wireless Charger", "category": "Electronics", "sales": 10375, "quantity": 45, "date": "2024-03-04", "region": "South", "salesperson": "Sarah Johnson"}
         ];
 
         // Global variables
@@ -643,10 +834,10 @@
             const averageSales = totalSales / totalRecords;
             const totalQuantity = salesData.reduce((sum, record) => sum + record.quantity, 0);
 
-            // Animate the numbers
+            // Animate the numbers with rupee symbol
             animateValue('total-records', 0, totalRecords, 1000);
-            animateValue('total-sales', 0, totalSales, 1000, '$');
-            animateValue('average-sales', 0, averageSales, 1000, '$');
+            animateValue('total-sales', 0, totalSales, 1000, '₹');
+            animateValue('average-sales', 0, averageSales, 1000, '₹');
             animateValue('total-quantity', 0, totalQuantity, 1000);
         }
 
@@ -713,7 +904,7 @@
                 
                 const barValue = document.createElement('div');
                 barValue.className = 'bar-value';
-                barValue.textContent = '$' + value.toLocaleString();
+                barValue.textContent = '₹' + value.toLocaleString('en-IN');
                 
                 const barLabel = document.createElement('div');
                 barLabel.className = 'bar-label';
@@ -723,7 +914,7 @@
                 bar.appendChild(barLabel);
                 
                 bar.addEventListener('click', () => {
-                    showMessage(`Selected ${category}: $${value.toLocaleString()}`, 'success');
+                    showMessage(`Selected ${category}: ₹${value.toLocaleString('en-IN')}`, 'success');
                     filterByCategory(category);
                 });
                 
@@ -821,7 +1012,7 @@
                     tooltip.style.fontSize = '12px';
                     tooltip.style.pointerEvents = 'none';
                     tooltip.style.zIndex = '1000';
-                    tooltip.textContent = `${date}: $${dateData[date].toLocaleString()}`;
+                    tooltip.textContent = `${date}: ₹${dateData[date].toLocaleString('en-IN')}`;
                     tooltip.style.left = (e.pageX + 10) + 'px';
                     tooltip.style.top = (e.pageY - 30) + 'px';
                     document.body.appendChild(tooltip);
@@ -847,7 +1038,7 @@
                     <td>${record.id}</td>
                     <td>${record.product}</td>
                     <td>${record.category}</td>
-                    <td>$${record.sales.toLocaleString()}</td>
+                    <td>₹${record.sales.toLocaleString('en-IN')}</td>
                     <td>${record.quantity}</td>
                     <td>${record.date}</td>
                     <td>${record.region}</td>
@@ -865,15 +1056,20 @@
         function filterTable() {
             const searchInput = document.getElementById('search-input');
             const tableBody = document.getElementById('table-body');
+            const searchStats = document.getElementById('search-stats');
             
             // Validate elements exist
-            if (!searchInput || !tableBody) {
+            if (!searchInput || !tableBody || !searchStats) {
                 console.error('Required DOM elements not found');
                 return;
             }
             
-            const searchValue = searchInput.value.toLowerCase();
+            const searchValue = searchInput.value.toLowerCase().trim();
             const tableRows = tableBody.querySelectorAll('tr');
+            let visibleCount = 0;
+            let categoryStats = {};
+            let totalSales = 0;
+            let totalQuantity = 0;
             
             tableRows.forEach(row => {
                 // Validate row has enough cells
@@ -884,13 +1080,60 @@
                 
                 const product = row.cells[1].textContent.toLowerCase();
                 const category = row.cells[2].textContent.toLowerCase();
+                const sales = parseFloat(row.cells[3].textContent.replace(/[^0-9.-]/g, ''));
+                const quantity = parseInt(row.cells[4].textContent.replace(/[^0-9]/g, ''));
                 
-                if (product.includes(searchValue) || category.includes(searchValue)) {
+                const matchesSearch = product.includes(searchValue) || category.includes(searchValue);
+                
+                if (matchesSearch) {
                     row.style.display = '';
+                    visibleCount++;
+                    
+                    // Calculate category statistics
+                    if (!categoryStats[category]) {
+                        categoryStats[category] = {
+                            count: 0,
+                            totalSales: 0,
+                            totalQuantity: 0
+                        };
+                    }
+                    categoryStats[category].count++;
+                    categoryStats[category].totalSales += sales;
+                    categoryStats[category].totalQuantity += quantity;
+                    
+                    totalSales += sales;
+                    totalQuantity += quantity;
                 } else {
                     row.style.display = 'none';
                 }
             });
+            
+            // Update search statistics
+            updateSearchStats(searchValue, visibleCount, categoryStats, totalSales, totalQuantity);
+        }
+
+        function updateSearchStats(searchTerm, visibleCount, categoryStats, totalSales, totalQuantity) {
+            const searchStats = document.getElementById('search-stats');
+            
+            if (searchTerm === '') {
+                searchStats.style.display = 'none';
+                return;
+            }
+            
+            searchStats.style.display = 'block';
+            
+            let statsHTML = `<strong>Search Results:</strong> ${visibleCount} items found`;
+            
+            if (Object.keys(categoryStats).length > 0) {
+                statsHTML += '<br><strong>Category Breakdown:</strong><br>';
+                for (const [category, stats] of Object.entries(categoryStats)) {
+                    const categoryCap = category.charAt(0).toUpperCase() + category.slice(1);
+                    statsHTML += `• ${categoryCap}: ${stats.count} items, ₹${stats.totalSales.toLocaleString('en-IN')} sales, ${stats.totalQuantity} units<br>`;
+                }
+                statsHTML += `<strong>Total:</strong> ₹${totalSales.toLocaleString('en-IN')} sales, ${totalQuantity} units`;
+            }
+            
+            searchStats.innerHTML = statsHTML;
         }
 
         function filterByCategory(category) {
@@ -917,7 +1160,7 @@
                     record.id,
                     `"${record.product}"`,
                     record.category,
-                    record.sales,
+                    `₹${record.sales.toLocaleString('en-IN')}`,
                     record.quantity,
                     record.date,
                     record.region,
@@ -1007,22 +1250,38 @@
             
             // Show notification every 5 updates
             if (updateCount % 5 === 0) {
-                showMessage(`Live update: ${salesData[randomIndex].product} sales updated to $${salesData[randomIndex].sales.toFixed(2)}`, 'success');
+                showMessage(`Live update: ${salesData[randomIndex].product} sales updated to ₹${salesData[randomIndex].sales.toFixed(2).toLocaleString('en-IN')}`, 'success');
             }
         }
 
         function toggleRealTime(event) {
             isRealTimeActive = !isRealTimeActive;
-            const button = event.target;
-            const indicator = document.getElementById('status-indicator');
+            const statusContainer = document.getElementById('real-time-status');
+            const statusText = document.getElementById('live-status-text');
+            const statusIndicator = document.getElementById('status-indicator');
+            const toggleBtn = document.getElementById('live-toggle-btn');
             
             if (isRealTimeActive) {
-                button.textContent = 'Pause';
-                indicator.classList.remove('paused');
+                // Activate live mode
+                statusContainer.classList.remove('paused');
+                statusContainer.classList.add('live');
+                statusText.textContent = '🔴 LIVE';
+                statusText.classList.remove('paused');
+                statusIndicator.classList.remove('paused');
+                toggleBtn.textContent = '⏸️ Pause';
+                toggleBtn.classList.remove('resume');
+                toggleBtn.classList.add('pause');
                 showMessage('Real-time updates resumed', 'success');
             } else {
-                button.textContent = 'Resume';
-                indicator.classList.add('paused');
+                // Pause live mode
+                statusContainer.classList.remove('live');
+                statusContainer.classList.add('paused');
+                statusText.textContent = '⏸️ PAUSED';
+                statusText.classList.add('paused');
+                statusIndicator.classList.add('paused');
+                toggleBtn.textContent = '▶️ Resume';
+                toggleBtn.classList.remove('pause');
+                toggleBtn.classList.add('resume');
                 showMessage('Real-time updates paused', 'error');
             }
         }
