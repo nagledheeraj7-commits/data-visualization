@@ -1,6 +1,3 @@
-// Import API service
-import { apiService } from './src/services/api.js';
-
 // Global variables
 let salesData = [];
 let filteredData = [];
@@ -436,24 +433,29 @@ function setupManualEntry() {
     }
 }
 
-// Load initial data from backend API
+// Load initial data from local JSON file
 async function loadInitialData() {
     try {
-        const result = await apiService.sales.getAll();
+        const response = await fetch("../data.json");
+        const data = await response.json();
         
-        if (result.success) {
-            salesData = result.data;
-            filteredData = [...salesData];
-            
-            updateDashboard();
-            populateFilters();
+        // Handle different data formats
+        if (data.salesData) {
+            salesData = data.salesData;
+        } else if (Array.isArray(data)) {
+            salesData = data;
         } else {
-            console.error('API Error:', result.message);
-            showNotification('Error loading data from server.', 'error');
+            throw new Error('Invalid data format');
         }
+        
+        filteredData = [...salesData];
+        
+        updateDashboard();
+        populateFilters();
+        showNotification('Data loaded successfully', 'success');
     } catch (error) {
         console.error('Error loading data:', error);
-        showNotification('Error connecting to server. Please check if backend is running.', 'error');
+        showNotification('Error loading data. Please check if data.json exists.', 'error');
     }
 }
 
@@ -1943,7 +1945,7 @@ async function initializeDashboard() {
 async function loadData() {
     try {
         // Fetch data from data.json file
-        const response = await fetch("data.json");
+        const response = await fetch("../data.json");
         const data = await response.json();
         
         // Handle different data formats
