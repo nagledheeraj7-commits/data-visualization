@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+
+  backend:
+    build: ./backend
+    container_name: sales_analytics_backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend/prisma:/app/prisma
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=file:/app/prisma/dev.db
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - CORS_ORIGIN=http://localhost:3000
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: sales_analytics_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://backend:3001/api
+    depends_on:
+      - backend
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
