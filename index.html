@@ -3,281 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Visualization Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Sales Analytics Dashboard</title>
+    <link rel="stylesheet" href="frontend/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <!-- Login Modal -->
-    
-                
-                
-
-    <!-- Header Section -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="header-text">
-                    <h1 class="header-title">Data Visualization Dashboard</h1>
-                    <p class="header-subtitle">Sales Data Analysis & Insights</p>
-                </div>
-                <div class="user-info">
-                    <div class="user-details">
-                        <span class="user-name" id="current-user-name">Guest User</span>
-                        <span class="user-id" id="current-user-id">Not logged in</span>
-                    </div>
-                    <button id="logout-btn" class="btn btn-secondary" style="display: none;">Logout</button>
-                </div>
-                <div class="header-controls">
-                    <button id="dark-mode-toggle" class="btn btn-secondary" title="Toggle Dark Mode">
-                        <span class="theme-icon">🌙</span>
-                    </button>
-                    <button id="export-csv" class="btn btn-primary" title="Export to CSV">
-                        📥 Export CSV
-                    </button>
-                </div>
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+        <div class="nav-container">
+            <h1 class="nav-title">Sales Analytics Dashboard</h1>
+            <div class="nav-actions">
+                <button id="darkModeToggle" class="btn btn-secondary">🌙 Dark Mode</button>
+                <button id="simulationBtn" class="btn btn-secondary">▶️ Simulate</button>
+                <button id="exportPdfBtn" class="btn btn-secondary">📄 Export PDF</button>
+                <button id="exportBtn" class="btn btn-secondary">Export Data</button>
+                <button id="refreshBtn" class="btn btn-primary">Refresh</button>
             </div>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="navigation">
-        <div class="container">
-            <ul class="nav-list">
-                <li><a href="#overview" class="nav-link active">Overview</a></li>
-                <li><a href="#charts" class="nav-link">Charts</a></li>
-                <li><a href="#data-table" class="nav-link">Data Table</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div class="dashboard-container">
+        <!-- Sidebar Menu -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item active">
+                        <a href="#" class="nav-link" data-page="dashboard">
+                            <span class="nav-icon">📊</span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="upload">
+                            <span class="nav-icon">📁</span>
+                            Upload Data
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="reports">
+                            <span class="nav-icon">📈</span>
+                            Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-page="settings">
+                            <span class="nav-icon">⚙️</span>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <!-- Overview Section with Summary Cards -->
-            <section id="overview" class="overview-section">
-                <h2 class="section-title">Dashboard Overview</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">📊</div>
-                        <div class="stat-content">
-                            <h3 class="stat-title">Total Records</h3>
-                            <p class="stat-value" id="total-records">0</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">💰</div>
-                        <div class="stat-content">
-                            <h3 class="stat-title">Total Sales</h3>
-                            <p class="stat-value" id="total-sales">$0</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📈</div>
-                        <div class="stat-content">
-                            <h3 class="stat-title">Average Sales</h3>
-                            <p class="stat-value" id="average-sales">$0</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📦</div>
-                        <div class="stat-content">
-                            <h3 class="stat-title">Total Quantity</h3>
-                            <p class="stat-value" id="total-quantity">0</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Charts Section -->
-            <section id="charts" class="charts-section">
-                <h2 class="section-title">Data Visualizations</h2>
-                <div class="charts-grid">
-                    <div class="chart-container">
-                        <h3 class="chart-title">Sales by Category</h3>
-                        <canvas id="barChart"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <h3 class="chart-title">Sales Trend</h3>
-                        <canvas id="lineChart"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <h3 class="chart-title">Category Distribution</h3>
-                        <canvas id="pieChart"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Data Table Section -->
-            <section id="data-table" class="table-section">
-                <h2 class="section-title">Sales Data Table</h2>
-                <div class="table-container">
-                    <div class="table-controls">
-                        <input type="text" id="search-input" placeholder="Search products..." class="search-input">
-                        <select id="category-filter" class="filter-select">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page-content active">
+                <!-- Filters Section -->
+                <div class="filters-section">
+                    <div class="filter-group">
+                        <select id="categoryFilter" class="filter-select">
                             <option value="">All Categories</option>
                         </select>
-                        <input type="date" id="date-from" class="date-input" placeholder="From Date">
-                        <input type="date" id="date-to" class="date-input" placeholder="To Date">
-                        <div class="price-range">
-                            <input type="number" id="price-min" class="price-input" placeholder="Min Price" min="0">
-                            <span>-</span>
-                            <input type="number" id="price-max" class="price-input" placeholder="Max Price" min="0">
+                        <select id="regionFilter" class="filter-select">
+                            <option value="">All Regions</option>
+                        </select>
+                        <input type="date" id="startDate" class="filter-input" placeholder="Start Date">
+                        <input type="date" id="endDate" class="filter-input" placeholder="End Date">
+                        <button id="applyFilters" class="btn btn-primary">Apply Filters</button>
+                        <button id="clearFilters" class="btn btn-secondary">Clear</button>
+                    </div>
+                </div>
+
+                <!-- Data Comparison Section -->
+                <div class="comparison-section">
+                    <h2>📊 Data Comparison</h2>
+                    <div class="comparison-controls">
+                        <div class="comparison-period">
+                            <label>Period 1:</label>
+                            <input type="date" id="period1Start" class="comparison-input">
+                            <span>to</span>
+                            <input type="date" id="period1End" class="comparison-input">
                         </div>
-                        <button id="refresh-btn" class="btn btn-primary">Refresh Data</button>
-                        <div class="import-controls">
-                            <input type="file" id="file-input" accept=".csv,.xlsx,.xls">
-                            <button id="import-btn" class="btn btn-secondary">📁 Import Excel/CSV</button>
-                            <button id="manual-entry-btn" class="btn btn-secondary">➕ Add Data</button>
-                            <button id="export-btn" class="btn btn-secondary">📥 Export CSV</button>
+                        <div class="comparison-period">
+                            <label>Period 2:</label>
+                            <input type="date" id="period2Start" class="comparison-input">
+                            <span>to</span>
+                            <input type="date" id="period2End" class="comparison-input">
+                        </div>
+                        <button id="compareBtn" class="btn btn-primary">Compare Periods</button>
+                        <button id="clearComparison" class="btn btn-secondary">Clear</button>
+                    </div>
+                    <div class="comparison-results" id="comparisonResults" style="display: none;">
+                        <div class="comparison-chart">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                        <div class="comparison-stats">
+                            <h3>Comparison Summary</h3>
+                            <div id="comparisonStats"></div>
                         </div>
                     </div>
-                    <div id="search-stats" class="search-stats">
-                        <!-- Search statistics will appear here -->
+                </div>
+
+                <!-- KPI Cards Section -->
+                <div class="kpi-section">
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <h3>Total Sales</h3>
+                            <span class="kpi-icon">💰</span>
+                        </div>
+                        <div class="kpi-value" id="totalSales">0</div>
+                        <div class="kpi-change positive">+12.5%</div>
                     </div>
-                    <div class="table-wrapper">
-                        <table id="data-table" class="data-table">
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <h3>Total Revenue</h3>
+                            <span class="kpi-icon">💵</span>
+                        </div>
+                        <div class="kpi-value" id="totalRevenue">$0</div>
+                        <div class="kpi-change positive">+8.3%</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <h3>Total Orders</h3>
+                            <span class="kpi-icon">📦</span>
+                        </div>
+                        <div class="kpi-value" id="totalOrders">0</div>
+                        <div class="kpi-change negative">-2.1%</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <h3>Best Selling Product</h3>
+                            <span class="kpi-icon">⭐</span>
+                        </div>
+                        <div class="kpi-value" id="bestProduct">-</div>
+                        <div class="kpi-change positive">+15.7%</div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-row">
+                        <div class="chart-container">
+                            <h3>Sales by Category</h3>
+                            <canvas id="barChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Monthly Revenue Trend</h3>
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-row">
+                        <div class="chart-container">
+                            <h3>Product Distribution</h3>
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Regional Sales</h3>
+                            <canvas id="doughnutChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Charts Section -->
+                <div class="advanced-charts-section">
+                    <h2>Advanced Analytics</h2>
+                    <div class="chart-row">
+                        <div class="chart-container">
+                            <h3>Revenue vs Sales Scatter Plot</h3>
+                            <canvas id="scatterChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Performance Radar Chart</h3>
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-row">
+                        <div class="chart-container full-width">
+                            <h3>Cumulative Revenue Trend (Area Chart)</h3>
+                            <canvas id="areaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Table Section -->
+                <div class="table-section">
+                    <div class="table-header">
+                        <h3>Sales Data</h3>
+                        <div class="table-controls">
+                            <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+                            <select id="sortSelect" class="sort-select">
+                                <option value="date">Sort by Date</option>
+                                <option value="sales">Sort by Sales</option>
+                                <option value="revenue">Sort by Revenue</option>
+                                <option value="product">Sort by Product</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="dataTable">
                             <thead>
                                 <tr>
-                                    <th class="sortable" data-column="id">ID ↕</th>
-                                    <th class="sortable" data-column="product">Product ↕</th>
-                                    <th class="sortable" data-column="category">Category ↕</th>
-                                    <th class="sortable" data-column="sales">Sales ↕</th>
-                                    <th class="sortable" data-column="quantity">Quantity ↕</th>
-                                    <th class="sortable" data-column="date">Date ↕</th>
-                                    <th class="sortable" data-column="region">Region ↕</th>
-                                    <th class="sortable" data-column="salesperson">Salesperson ↕</th>
+                                    <th>Order ID</th>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Region</th>
+                                    <th>Sales</th>
+                                    <th>Revenue</th>
+                                    <th>Date</th>
                                 </tr>
                             </thead>
-                            <tbody id="table-body">
+                            <tbody id="tableBody">
                                 <!-- Data will be populated here -->
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </section>
-
-            <!-- Validation Messages -->
-            <div id="validation-messages" class="validation-messages">
-                <!-- Validation messages will appear here -->
-            </div>
-            
-            <!-- Audit Trail Section -->
-            <section id="audit-trail" class="section">
-                <div class="container">
-                    <h2 class="section-title">📋 Audit Trail</h2>
-                    <div class="audit-container">
-                        <div class="audit-controls">
-                            <button id="clear-audit-btn" class="btn btn-secondary">🗑️ Clear History</button>
-                            <button id="export-audit-btn" class="btn btn-secondary">📥 Export Audit</button>
-                        </div>
-                        <div class="audit-table-wrapper">
-                            <table id="audit-table" class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Timestamp</th>
-                                        <th>User</th>
-                                        <th>Action</th>
-                                        <th>Details</th>
-                                        <th>IP Address</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="audit-table-body">
-                                    <!-- Audit records will be populated here -->
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="pagination">
+                        <button id="prevPage" class="btn btn-secondary">Previous</button>
+                        <span id="pageInfo">Page 1 of 1</span>
+                        <button id="nextPage" class="btn btn-secondary">Next</button>
                     </div>
                 </div>
-            </section>
-            
-            <!-- Real-time Status -->
-            <div id="real-time-status" class="real-time-status">
-                <span class="status-indicator"></span>
-                <span class="status-text">Live Updates: <span id="update-count">0</span> updates</span>
-                <button id="toggle-real-time" class="btn btn-small">Pause</button>
             </div>
-        </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Data Visualization Dashboard. All rights reserved.</p>
-        </div>
-    </footer>
+            <!-- Upload Data Page -->
+            <div id="upload-page" class="page-content">
+                <div class="upload-section">
+                    <h2>Upload Dataset</h2>
+                    <p>Upload your CSV or Excel file to update the dashboard with your data.</p>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📁</div>
+                        <p>Drag and drop your file here or click to browse</p>
+                        <p class="upload-hint">Supported formats: CSV, Excel (.xlsx)</p>
+                        <input type="file" id="fileInput" accept=".csv,.xlsx" style="display: none;">
+                        <button id="browseBtn" class="btn btn-primary">Browse Files</button>
+                    </div>
+                    <div id="uploadStatus" class="upload-status" style="display: none;"></div>
+                </div>
+            </div>
 
-    <!-- Manual Data Entry Modal -->
-    <div id="manual-entry-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>➕ Add New Sales Record</h3>
-                <span class="close-btn" id="close-modal">&times;</span>
+            <!-- Reports Page -->
+            <div id="reports-page" class="page-content">
+                <div class="reports-section">
+                    <h2>Reports</h2>
+                    <div class="report-cards">
+                        <div class="report-card">
+                            <h3>Monthly Summary</h3>
+                            <p>View comprehensive monthly sales and revenue reports.</p>
+                            <button class="btn btn-primary">Generate Report</button>
+                        </div>
+                        <div class="report-card">
+                            <h3>Product Performance</h3>
+                            <p>Analyze product-wise performance and trends.</p>
+                            <button class="btn btn-primary">Generate Report</button>
+                        </div>
+                        <div class="report-card">
+                            <h3>Regional Analysis</h3>
+                            <p>Explore regional sales patterns and distributions.</p>
+                            <button class="btn btn-primary">Generate Report</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="manual-entry-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="manual-product">Product Name *</label>
-                            <input type="text" id="manual-product" name="product" required placeholder="Enter product name">
+
+            <!-- Settings Page -->
+            <div id="settings-page" class="page-content">
+                <div class="settings-section">
+                    <h2>⚙️ Settings</h2>
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <h3>🎨 Appearance</h3>
+                            <div class="setting-item">
+                                <label for="themeSelect">Theme</label>
+                                <select id="themeSelect" class="setting-select">
+                                    <option value="light">Light Mode</option>
+                                    <option value="dark">Dark Mode</option>
+                                    <option value="auto">Auto (System)</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label for="chartAnimation">Chart Animations</label>
+                                <input type="checkbox" id="chartAnimation" checked>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="manual-category">Category *</label>
-                            <select id="manual-category" name="category" required>
-                                <option value="">Select category</option>
-                                <option value="Electronics">Electronics</option>
-                                <option value="Furniture">Furniture</option>
-                                <option value="Stationery">Stationery</option>
-                                <option value="Clothing">Clothing</option>
-                                <option value="Food">Food</option>
-                                <option value="Other">Other</option>
-                            </select>
+                        
+                        <div class="setting-card">
+                            <h3>📊 Data Settings</h3>
+                            <div class="setting-item">
+                                <label for="itemsPerPage">Items per page</label>
+                                <select id="itemsPerPage" class="setting-select">
+                                    <option value="5">5</option>
+                                    <option value="10" selected>10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label for="autoRefresh">Auto Refresh (seconds)</label>
+                                <select id="autoRefresh" class="setting-select">
+                                    <option value="0">Disabled</option>
+                                    <option value="5">5 seconds</option>
+                                    <option value="10">10 seconds</option>
+                                    <option value="30">30 seconds</option>
+                                    <option value="60">1 minute</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3>🔔 Notifications</h3>
+                            <div class="setting-item">
+                                <label for="showNotifications">Show Notifications</label>
+                                <input type="checkbox" id="showNotifications" checked>
+                            </div>
+                            <div class="setting-item">
+                                <label for="notificationDuration">Notification Duration (seconds)</label>
+                                <select id="notificationDuration" class="setting-select">
+                                    <option value="2">2 seconds</option>
+                                    <option value="3" selected>3 seconds</option>
+                                    <option value="5">5 seconds</option>
+                                    <option value="10">10 seconds</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <h3>💾 Data Management</h3>
+                            <div class="setting-item">
+                                <label for="autoSave">Auto Save Data</label>
+                                <input type="checkbox" id="autoSave" checked>
+                            </div>
+                            <div class="setting-buttons">
+                                <button id="clearDataBtn" class="btn btn-secondary">Clear All Data</button>
+                                <button id="exportSettingsBtn" class="btn btn-primary">Export Settings</button>
+                                <button id="importSettingsBtn" class="btn btn-primary">Import Settings</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="manual-sales">Sales Amount (₹) *</label>
-                            <input type="number" id="manual-sales" name="sales" required min="0" step="0.01" placeholder="0.00">
-                        </div>
-                        <div class="form-group">
-                            <label for="manual-quantity">Quantity *</label>
-                            <input type="number" id="manual-quantity" name="quantity" required min="1" placeholder="1">
-                        </div>
+                    
+                    <div class="settings-actions">
+                        <button id="saveSettingsBtn" class="btn btn-primary">💾 Save Settings</button>
+                        <button id="resetSettingsBtn" class="btn btn-secondary">🔄 Reset to Default</button>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="manual-date">Date *</label>
-                            <input type="date" id="manual-date" name="date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="manual-region">Region</label>
-                            <select id="manual-region" name="region">
-                                <option value="">Select region</option>
-                                <option value="North">North</option>
-                                <option value="South">South</option>
-                                <option value="East">East</option>
-                                <option value="West">West</option>
-                                <option value="Central">Central</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="manual-salesperson">Salesperson</label>
-                            <input type="text" id="manual-salesperson" name="salesperson" placeholder="Enter salesperson name">
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Add Record</button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+        </main>
     </div>
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
+    <script>
+document.querySelectorAll(".nav-link").forEach(link => {
+  link.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    const page = this.getAttribute("data-page");
+
+    document.querySelectorAll(".page-content").forEach(p => {
+      p.classList.remove("active");
+    });
+
+    document.getElementById(page + "-page").classList.add("active");
+  });
+});
+</script>
 </body>
 </html>
