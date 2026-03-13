@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern data visualization dashboard with advanced analytics and real-time updates">
+    <meta name="keywords" content="dashboard, analytics, charts, sales, data visualization">
+    <meta name="author" content="Data Visualization Team">
+    <title>Data Visualization Dashboard</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/styles/main.css" as="style">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js" as="script">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/styles/main.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:title" content="Data Visualization Dashboard">
+    <meta property="og:description" content="Modern data visualization dashboard with advanced analytics">
+    <meta property="og:image" content="https://yourdomain.com/assets/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com">
+    <meta property="twitter:title" content="Data Visualization Dashboard">
+    <meta property="twitter:description" content="Modern data visualization dashboard with advanced analytics">
+    <meta property="twitter:image" content="https://yourdomain.com/assets/twitter-image.jpg">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>Loading Dashboard...</p>
+    </div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1 class="header-title">Data Visualization Dashboard</h1>
+                    <p class="header-subtitle">Sales Data Analysis & Insights</p>
+                </div>
+                <div class="header-controls">
+                    <button id="dark-mode-toggle" class="btn btn-secondary" title="Toggle Dark Mode" aria-label="Toggle dark mode">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    <button id="export-csv" class="btn btn-primary" title="Export to CSV" aria-label="Export data to CSV">
+                        📥 Export CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navigation" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <ul class="nav-list">
+                <li><a href="#overview" class="nav-link active" aria-current="page">Overview</a></li>
+                <li><a href="#charts" class="nav-link">Charts</a></li>
+                <li><a href="#data-table" class="nav-link">Data Table</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+        <div class="container">
+            <!-- Overview Section with Summary Cards -->
+            <section id="overview" class="overview-section" aria-labelledby="overview-title">
+                <h2 id="overview-title" class="section-title">Dashboard Overview</h2>
+                <div class="stats-grid" role="region" aria-label="Statistics overview">
+                    <div class="stat-card">
+                        <div class="stat-icon" aria-hidden="true">📊</div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Total Records</h3>
+                            <p class="stat-value" id="total-records" aria-live="polite">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" aria-hidden="true">💰</div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Total Sales</h3>
+                            <p class="stat-value" id="total-sales" aria-live="polite">$0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" aria-hidden="true">📈</div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Average Sales</h3>
+                            <p class="stat-value" id="average-sales" aria-live="polite">$0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" aria-hidden="true">📦</div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Total Quantity</h3>
+                            <p class="stat-value" id="total-quantity" aria-live="polite">0</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section id="charts" class="charts-section" aria-labelledby="charts-title">
+                <h2 id="charts-title" class="section-title">Data Visualizations</h2>
+                <div class="charts-grid" role="region" aria-label="Data visualizations">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Sales by Category</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="barChart" role="img" aria-label="Bar chart showing sales by category"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h3 class="chart-title">Sales Trend</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="lineChart" role="img" aria-label="Line chart showing sales trend over time"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h3 class="chart-title">Category Distribution</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="pieChart" role="img" aria-label="Pie chart showing category distribution"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Table Section -->
+            <section id="data-table" class="table-section" aria-labelledby="table-title">
+                <h2 id="table-title" class="section-title">Sales Data Table</h2>
+                <div class="table-container">
+                    <div class="table-controls" role="region" aria-label="Table controls">
+                        <label for="search-input" class="sr-only">Search products</label>
+                        <input type="text" id="search-input" placeholder="Search products..." class="search-input" aria-describedby="search-help">
+                        <span id="search-help" class="sr-only">Type to filter products by name</span>
+                        
+                        <label for="category-filter" class="sr-only">Filter by category</label>
+                        <select id="category-filter" class="filter-select" aria-describedby="category-help">
+                            <option value="">All Categories</option>
+                        </select>
+                        <span id="category-help" class="sr-only">Select a category to filter results</span>
+                        
+                        <label for="date-from" class="sr-only">From date</label>
+                        <input type="date" id="date-from" class="date-input" aria-describedby="date-from-help">
+                        <span id="date-from-help" class="sr-only">Filter results from this date</span>
+                        
+                        <label for="date-to" class="sr-only">To date</label>
+                        <input type="date" id="date-to" class="date-input" aria-describedby="date-to-help">
+                        <span id="date-to-help" class="sr-only">Filter results until this date</span>
+                        
+                        <div class="price-range" role="group" aria-labelledby="price-range-label">
+                            <span id="price-range-label" class="sr-only">Price range filter</span>
+                            <label for="price-min" class="sr-only">Minimum price</label>
+                            <input type="number" id="price-min" class="price-input" placeholder="Min Price" min="0" aria-describedby="price-min-help">
+                            <span id="price-min-help" class="sr-only">Minimum sales amount</span>
+                            <span aria-hidden="true">-</span>
+                            <label for="price-max" class="sr-only">Maximum price</label>
+                            <input type="number" id="price-max" class="price-input" placeholder="Max Price" min="0" aria-describedby="price-max-help">
+                            <span id="price-max-help" class="sr-only">Maximum sales amount</span>
+                        </div>
+                        
+                        <button id="refresh-btn" class="btn btn-primary" aria-label="Refresh data">
+                            🔄 Refresh Data
+                        </button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="data-table" class="data-table" role="table" aria-label="Sales data table" aria-describedby="table-help">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-column="id" scope="col" aria-label="Sort by ID">ID ↕</th>
+                                    <th class="sortable" data-column="product" scope="col" aria-label="Sort by Product">Product ↕</th>
+                                    <th class="sortable" data-column="category" scope="col" aria-label="Sort by Category">Category ↕</th>
+                                    <th class="sortable" data-column="sales" scope="col" aria-label="Sort by Sales">Sales ↕</th>
+                                    <th class="sortable" data-column="quantity" scope="col" aria-label="Sort by Quantity">Quantity ↕</th>
+                                    <th class="sortable" data-column="date" scope="col" aria-label="Sort by Date">Date ↕</th>
+                                    <th class="sortable" data-column="region" scope="col" aria-label="Sort by Region">Region ↕</th>
+                                    <th class="sortable" data-column="salesperson" scope="col" aria-label="Sort by Salesperson">Salesperson ↕</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- Data will be populated here -->
+                            </tbody>
+                        </table>
+                        <p id="table-help" class="sr-only">Click column headers to sort. Use filters above to narrow results.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Validation Messages -->
+            <div id="validation-messages" class="validation-messages" role="alert" aria-live="polite" aria-atomic="true">
+                <!-- Validation messages will appear here -->
+            </div>
+            
+            <!-- Real-time Status -->
+            <div id="real-time-status" class="real-time-status" role="status" aria-live="polite">
+                <span class="status-indicator" aria-hidden="true"></span>
+                <span class="status-text">Live Updates: <span id="update-count">0</span> updates</span>
+                <button id="toggle-real-time" class="btn btn-small" aria-label="Toggle real-time updates">Pause</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Data Visualization Dashboard. All rights reserved.</p>
+            <p>Built with ❤️ using modern web technologies</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="/scripts/dashboard.js"></script>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Data Visualization Dashboard",
+        "description": "Modern data visualization dashboard with advanced analytics and real-time updates",
+        "url": "https://yourdomain.com",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>

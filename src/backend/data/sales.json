@@ -1,0 +1,504 @@
+{
+  "salesData": [
+    {
+      "id": 1,
+      "product": "Laptop",
+      "category": "Electronics",
+      "sales": 1500,
+      "quantity": 15,
+      "date": "2024-01-15",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 2,
+      "product": "Mouse",
+      "category": "Electronics",
+      "sales": 250,
+      "quantity": 50,
+      "date": "2024-01-16",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 3,
+      "product": "Keyboard",
+      "category": "Electronics",
+      "sales": 450,
+      "quantity": 30,
+      "date": "2024-01-17",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 4,
+      "product": "Monitor",
+      "category": "Electronics",
+      "sales": 800,
+      "quantity": 20,
+      "date": "2024-01-18",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 5,
+      "product": "Desk Chair",
+      "category": "Furniture",
+      "sales": 1200,
+      "quantity": 12,
+      "date": "2024-01-19",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 6,
+      "product": "Desk Lamp",
+      "category": "Furniture",
+      "sales": 150,
+      "quantity": 25,
+      "date": "2024-01-20",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 7,
+      "product": "Notebook",
+      "category": "Stationery",
+      "sales": 50,
+      "quantity": 100,
+      "date": "2024-01-21",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 8,
+      "product": "Pen Set",
+      "category": "Stationery",
+      "sales": 30,
+      "quantity": 75,
+      "date": "2024-01-22",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 9,
+      "product": "Headphones",
+      "category": "Electronics",
+      "sales": 600,
+      "quantity": 18,
+      "date": "2024-01-23",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 10,
+      "product": "Webcam",
+      "category": "Electronics",
+      "sales": 350,
+      "quantity": 22,
+      "date": "2024-01-24",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 11,
+      "product": "Standing Desk",
+      "category": "Furniture",
+      "sales": 1800,
+      "quantity": 8,
+      "date": "2024-01-25",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 12,
+      "product": "Bookshelf",
+      "category": "Furniture",
+      "sales": 950,
+      "quantity": 10,
+      "date": "2024-01-26",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 13,
+      "product": "Calculator",
+      "category": "Stationery",
+      "sales": 45,
+      "quantity": 40,
+      "date": "2024-01-27",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 14,
+      "product": "Stapler",
+      "category": "Stationery",
+      "sales": 25,
+      "quantity": 30,
+      "date": "2024-01-28",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 15,
+      "product": "USB Hub",
+      "category": "Electronics",
+      "sales": 180,
+      "quantity": 35,
+      "date": "2024-01-29",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 16,
+      "product": "Tablet",
+      "category": "Electronics",
+      "sales": 750,
+      "quantity": 12,
+      "date": "2024-01-30",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 17,
+      "product": "Office Chair",
+      "category": "Furniture",
+      "sales": 850,
+      "quantity": 15,
+      "date": "2024-01-31",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 18,
+      "product": "Highlighters",
+      "category": "Stationery",
+      "sales": 35,
+      "quantity": 60,
+      "date": "2024-02-01",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 19,
+      "product": "Router",
+      "category": "Electronics",
+      "sales": 420,
+      "quantity": 25,
+      "date": "2024-02-02",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 20,
+      "product": "Filing Cabinet",
+      "category": "Furniture",
+      "sales": 650,
+      "quantity": 8,
+      "date": "2024-02-03",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 21,
+      "product": "Binder Clips",
+      "category": "Stationery",
+      "sales": 15,
+      "quantity": 120,
+      "date": "2024-02-04",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 22,
+      "product": "Smartphone",
+      "category": "Electronics",
+      "sales": 950,
+      "quantity": 10,
+      "date": "2024-02-05",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 23,
+      "product": "Conference Table",
+      "category": "Furniture",
+      "sales": 2200,
+      "quantity": 3,
+      "date": "2024-02-06",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 24,
+      "product": "Whiteboard",
+      "category": "Furniture",
+      "sales": 450,
+      "quantity": 6,
+      "date": "2024-02-07",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 25,
+      "product": "Markers",
+      "category": "Stationery",
+      "sales": 40,
+      "quantity": 80,
+      "date": "2024-02-08",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 26,
+      "product": "External Drive",
+      "category": "Electronics",
+      "sales": 280,
+      "quantity": 30,
+      "date": "2024-02-09",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 27,
+      "product": "Reception Desk",
+      "category": "Furniture",
+      "sales": 1500,
+      "quantity": 2,
+      "date": "2024-02-10",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 28,
+      "product": "Paper Clips",
+      "category": "Stationery",
+      "sales": 20,
+      "quantity": 150,
+      "date": "2024-02-11",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 29,
+      "product": "Printer",
+      "category": "Electronics",
+      "sales": 550,
+      "quantity": 7,
+      "date": "2024-02-12",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 30,
+      "product": "Storage Ottoman",
+      "category": "Furniture",
+      "sales": 380,
+      "quantity": 14,
+      "date": "2024-02-13",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 31,
+      "product": "Envelope Set",
+      "category": "Stationery",
+      "sales": 55,
+      "quantity": 45,
+      "date": "2024-02-14",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 32,
+      "product": "Wireless Mouse",
+      "category": "Electronics",
+      "sales": 320,
+      "quantity": 28,
+      "date": "2024-02-15",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 33,
+      "product": "Lounge Chair",
+      "category": "Furniture",
+      "sales": 950,
+      "quantity": 5,
+      "date": "2024-02-16",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 34,
+      "product": "Sticky Notes",
+      "category": "Stationery",
+      "sales": 25,
+      "quantity": 90,
+      "date": "2024-02-17",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 35,
+      "product": "Bluetooth Speaker",
+      "category": "Electronics",
+      "sales": 180,
+      "quantity": 40,
+      "date": "2024-02-18",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 36,
+      "product": "Coffee Table",
+      "category": "Furniture",
+      "sales": 750,
+      "quantity": 9,
+      "date": "2024-02-19",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 37,
+      "product": "File Folders",
+      "category": "Stationery",
+      "sales": 65,
+      "quantity": 55,
+      "date": "2024-02-20",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 38,
+      "product": "Power Bank",
+      "category": "Electronics",
+      "sales": 95,
+      "quantity": 65,
+      "date": "2024-02-21",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 39,
+      "product": "Side Table",
+      "category": "Furniture",
+      "sales": 320,
+      "quantity": 11,
+      "date": "2024-02-22",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 40,
+      "product": "Tape Dispenser",
+      "category": "Stationery",
+      "sales": 45,
+      "quantity": 35,
+      "date": "2024-02-23",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 41,
+      "product": "HDMI Cable",
+      "category": "Electronics",
+      "sales": 75,
+      "quantity": 85,
+      "date": "2024-02-24",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 42,
+      "product": "Executive Chair",
+      "category": "Furniture",
+      "sales": 1250,
+      "quantity": 4,
+      "date": "2024-02-25",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 43,
+      "product": "Legal Pads",
+      "category": "Stationery",
+      "sales": 85,
+      "quantity": 70,
+      "date": "2024-02-26",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 44,
+      "product": "USB Cable",
+      "category": "Electronics",
+      "sales": 35,
+      "quantity": 95,
+      "date": "2024-02-27",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 45,
+      "product": "Credenza",
+      "category": "Furniture",
+      "sales": 1800,
+      "quantity": 3,
+      "date": "2024-02-28",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 46,
+      "product": "Scissors",
+      "category": "Stationery",
+      "sales": 30,
+      "quantity": 50,
+      "date": "2024-02-29",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    },
+    {
+      "id": 47,
+      "product": "Laptop Stand",
+      "category": "Electronics",
+      "sales": 150,
+      "quantity": 32,
+      "date": "2024-03-01",
+      "region": "East",
+      "salesperson": "Mike Davis"
+    },
+    {
+      "id": 48,
+      "product": "Bookcase",
+      "category": "Furniture",
+      "sales": 850,
+      "quantity": 7,
+      "date": "2024-03-02",
+      "region": "West",
+      "salesperson": "Emily Wilson"
+    },
+    {
+      "id": 49,
+      "product": "Eraser Set",
+      "category": "Stationery",
+      "sales": 20,
+      "quantity": 110,
+      "date": "2024-03-03",
+      "region": "North",
+      "salesperson": "John Smith"
+    },
+    {
+      "id": 50,
+      "product": "Wireless Charger",
+      "category": "Electronics",
+      "sales": 125,
+      "quantity": 45,
+      "date": "2024-03-04",
+      "region": "South",
+      "salesperson": "Sarah Johnson"
+    }
+  ]
+}

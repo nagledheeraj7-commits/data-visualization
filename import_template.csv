@@ -1,0 +1,6 @@
+id,product,category,sales,quantity,date,region,salesperson
+51,New Laptop,Electronics,150000,10,2024-03-05,North,Alex Kumar
+52,Office Desk,Furniture,85000,5,2024-03-06,South,Priya Sharma
+53,Wireless Mouse,Electronics,4500,25,2024-03-07,East,Rahul Verma
+54,Notebook Set,Stationery,2500,50,2024-03-08,West,Anita Patel
+55,Conference Chair,Furniture,120000,8,2024-03-09,North,Vikram Singh
