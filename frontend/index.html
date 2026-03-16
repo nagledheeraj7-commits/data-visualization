@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization Dashboard</title>
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- External CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">📊 Data Visualization Dashboard</h1>
+            <p class="subtitle">Upload CSV/Excel files and visualize your data</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-card">
+                    <h2>📁 Upload Data File</h2>
+                    <p class="upload-description">
+                        Upload a CSV or Excel file to generate interactive charts and visualizations.
+                    </p>
+                    
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📤</div>
+                        <p class="upload-text">Drag and drop your file here</p>
+                        <p class="upload-subtext">or</p>
+                        <button class="upload-btn" id="uploadBtn">Browse Files</button>
+                        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" hidden>
+                        <p class="supported-formats">Supported formats: CSV, XLSX, XLS (Max 10MB)</p>
+                    </div>
+                    
+                    <!-- Upload Status -->
+                    <div class="upload-status" id="uploadStatus" style="display: none;">
+                        <div class="status-icon"></div>
+                        <div class="status-message"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Summary Section -->
+            <section class="summary-section" id="summarySection" style="display: none;">
+                <div class="summary-card">
+                    <h2>📈 Data Summary</h2>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="summary-label">Total Records</span>
+                            <span class="summary-value" id="totalRecords">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Total Columns</span>
+                            <span class="summary-value" id="totalColumns">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">File Name</span>
+                            <span class="summary-value" id="fileName">-</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Column Selection -->
+                    <div class="column-selection">
+                        <h3>Select Columns for Visualization</h3>
+                        <div class="column-controls">
+                            <div class="column-group">
+                                <label for="xAxis">X-Axis Column:</label>
+                                <select id="xAxis" class="column-select">
+                                    <option value="">Select column...</option>
+                                </select>
+                            </div>
+                            <div class="column-group">
+                                <label for="yAxis">Y-Axis Column:</label>
+                                <select id="yAxis" class="column-select">
+                                    <option value="">Select column...</option>
+                                </select>
+                            </div>
+                            <button class="generate-btn" id="generateCharts">Generate Charts</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section" id="chartsSection" style="display: none;">
+                <div class="charts-header">
+                    <h2>📊 Data Visualizations</h2>
+                    <div class="chart-controls">
+                        <button class="chart-type-btn active" data-chart="bar">📊 Bar</button>
+                        <button class="chart-type-btn" data-chart="line">📈 Line</button>
+                        <button class="chart-type-btn" data-chart="pie">🥧 Pie</button>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <!-- Bar Chart -->
+                    <div class="chart-container" id="barChartContainer">
+                        <h3>Bar Chart</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Line Chart -->
+                    <div class="chart-container" id="lineChartContainer" style="display: none;">
+                        <h3>Line Chart</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Pie Chart -->
+                    <div class="chart-container" id="pieChartContainer" style="display: none;">
+                        <h3>Pie Chart</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Table Section -->
+            <section class="table-section" id="tableSection" style="display: none;">
+                <div class="table-card">
+                    <h2>📋 Data Table</h2>
+                    <div class="table-controls">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search data...">
+                        <button class="export-btn" id="exportBtn">📥 Export CSV</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="dataTable">
+                            <thead id="tableHead"></thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Data Visualization Dashboard. Built with ❤️ using Chart.js & Node.js</p>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Processing your data...</p>
+    </div>
+
+    <!-- Local JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
