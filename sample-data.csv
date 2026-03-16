@@ -1,0 +1,51 @@
+Product,Category,Sales,Quantity,Region,Date,Price
+Laptop,Electronics,1200,15,North,2024-01-15,80
+Mouse,Electronics,450,50,South,2024-01-16,9
+Keyboard,Electronics,675,30,East,2024-01-17,22.5
+Monitor,Electronics,2400,20,West,2024-01-18,120
+Desk Chair,Furniture,1800,12,North,2024-01-19,150
+Table Lamp,Furniture,300,25,South,2024-01-20,12
+Notebook,Stationery,150,100,East,2024-01-21,1.5
+Pen Set,Stationery,75,75,West,2024-01-22,1
+Headphones,Electronics,900,18,North,2024-01-23,50
+Webcam,Electronics,550,22,South,2024-01-24,25
+Standing Desk,Furniture,3000,8,East,2024-01-25,375
+Bookshelf,Furniture,1200,10,West,2024-01-26,120
+Calculator,Stationery,100,40,North,2024-01-27,2.5
+Stapler,Stationery,50,30,South,2024-01-28,1.67
+USB Hub,Electronics,400,35,East,2024-01-29,11.43
+Tablet,Electronics,1500,12,West,2024-01-30,125
+Office Chair,Furniture,1350,15,North,2024-01-31,90
+Highlighters,Stationery,80,60,South,2024-02-01,1.33
+Router,Electronics,800,25,East,2024-02-02,32
+Filing Cabinet,Furniture,600,8,West,2024-02-03,75
+Binder Clips,Stationery,25,120,North,2024-02-04,0.21
+Smartphone,Electronics,2000,10,South,2024-02-05,200
+Conference Table,Furniture,4000,3,East,2024-02-06,1333.33
+Whiteboard,Furniture,450,6,West,2024-02-07,75
+Markers,Stationery,90,80,North,2024-02-08,1.13
+External Drive,Electronics,700,30,South,2024-02-09,23.33
+Reception Desk,Furniture,2500,2,East,2024-02-10,1250
+Paper Clips,Stationery,20,150,West,2024-02-11,0.13
+Printer,Electronics,900,7,North,2024-02-12,128.57
+Storage Ottoman,Furniture,600,14,South,2024-02-13,42.86
+Envelope Set,Stationery,110,45,East,2024-02-14,2.44
+Wireless Mouse,Electronics,650,28,West,2024-02-15,23.21
+Lounge Chair,Furniture,1800,5,North,2024-02-16,360
+Sticky Notes,Stationery,60,90,South,2024-02-17,0.67
+Bluetooth Speaker,Electronics,450,40,East,2024-02-18,11.25
+Coffee Table,Furniture,900,9,West,2024-02-19,100
+File Folders,Stationery,140,55,North,2024-02-20,2.55
+Power Bank,Electronics,300,65,South,2024-02-21,4.62
+Side Table,Furniture,400,11,East,2024-02-22,36.36
+Tape Dispenser,Stationery,45,35,West,2024-02-23,1.29
+HDMI Cable,Electronics,150,85,North,2024-02-24,1.76
+Executive Chair,Furniture,2200,4,South,2024-02-25,550
+Legal Pads,Stationery,160,70,East,2024-02-26,2.29
+USB Cable,Electronics,80,95,West,2024-02-27,0.84
+Credenza,Furniture,2800,3,North,2024-02-28,933.33
+Scissors,Stationery,70,50,South,2024-02-29,1.4
+Laptop Stand,Electronics,350,32,East,2024-03-01,10.94
+Bookcase,Furniture,1400,7,West,2024-03-02,200
+Eraser Set,Stationery,30,110,North,2024-03-03,0.27
+Wireless Charger,Electronics,250,45,South,2024-03-04,5.56
